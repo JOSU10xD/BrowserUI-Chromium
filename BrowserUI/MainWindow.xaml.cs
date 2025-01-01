@@ -21,13 +21,14 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Windows.System;
 
 
 namespace BrowserUI
 {
     public sealed partial class MainWindow : Window
     {
-        public MainWindow()             
+        public MainWindow()
         {
             this.InitializeComponent();
             WebView.Source = new Uri("https://www.google.com");
@@ -69,80 +70,40 @@ namespace BrowserUI
                 WebView.Source = new Uri(googleSearchUrl);
             }
         }
-        private void UrlBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        private void UrlBox_Loaded(object sender, RoutedEventArgs e)
         {
-            // Handle key press events, for example, for the "Enter" key
-            if (e.Key == Windows.System.VirtualKey.Enter)
+            if (UrlBox.FindName("PART_EditableTextBox") is TextBox textBox)
             {
-                GoButton_Click(sender, e);  // Trigger the Go button click logic
+                textBox.TextChanged += UrlBox_TextChanged;
             }
         }
-
-        private async void UrlBox_DataContextChanged(FrameworkElement sender, DataContextChangedEventArgs args)
+        private async void UrlBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if (args.NewValue is MainViewModel viewModel)
+            string query = UrlBox.Text;
+
+            if (!string.IsNullOrWhiteSpace(query))
             {
-                string query = viewModel.SearchQuery;
-
-                if (!string.IsNullOrWhiteSpace(query))
+                try
                 {
-                    try
-                    {
-                        using HttpClient client = new();
-                        string url = $"https://suggestqueries.google.com/complete/search?client=firefox&q={Uri.EscapeDataString(query)}";
-                        var response = await client.GetStringAsync(url);
+                    using HttpClient client = new();
+                    string url = $"https://suggestqueries.google.com/complete/search?client=firefox&q={Uri.EscapeDataString(query)}";
+                    var response = await client.GetStringAsync(url);
 
-                        // Parse JSON response
-                        var suggestions = JsonSerializer.Deserialize<List<object>>(response);
-                        if (suggestions != null && suggestions.Count > 1 && suggestions[1] is JsonElement suggestionArray)
-                        {
-                            var searchSuggestions = suggestionArray.EnumerateArray()
-                                                                  .Select(x => x.GetString())
-                                                                  .Where(x => x != null)
-                                                                  .ToList();
-                            // Update the ItemsSource for the ComboBox
-                            UrlBox.ItemsSource = new ObservableCollection<string>(searchSuggestions);
-                            UrlBox.IsDropDownOpen = true; // Ensure the dropdown is visible
-                        }
-                    }
-                    catch (Exception ex)
+                    // Parse JSON response
+                    var suggestions = JsonSerializer.Deserialize<List<object>>(response);
+                    if (suggestions != null && suggestions.Count > 1 && suggestions[1] is JsonElement suggestionArray)
                     {
-                        // Handle errors (e.g., network issues)
-                        Console.WriteLine($"Error fetching suggestions: {ex.Message}");
+                        var searchSuggestions = suggestionArray.EnumerateArray().Select(x => x.GetString()).Where(x => x != null).ToList();
+                        UrlBox.ItemsSource = new ObservableCollection<string>(searchSuggestions);
+                        UrlBox.IsDropDownOpen = true;
                     }
                 }
-                else
+                catch (Exception ex)
                 {
-                    // Clear the suggestions if the search query is empty
-                    UrlBox.ItemsSource = new ObservableCollection<string>();
-                    UrlBox.IsDropDownOpen = false; // Close the dropdown if no text
+                    // Handle errors (e.g., network issues)
+                    Console.WriteLine($"Error fetching suggestions: {ex.Message}");
                 }
             }
-        }
-
-        private void UrlBox_GotFocus(object sender, RoutedEventArgs e)
-        {
-            // Open the dropdown when the ComboBox is clicked
-            UrlBox.IsDropDownOpen = true;
-        }
-
-        private void UrlBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            // Handle selection of a suggestion
-            var selectedSuggestion = UrlBox.SelectedItem as string;
-            if (!string.IsNullOrEmpty(selectedSuggestion))
-            {
-                // Navigate or perform a search with the selected suggestion
-                string googleSearchUrl = $"https://www.google.com/search?q={Uri.EscapeDataString(selectedSuggestion)}";
-                WebView.Source = new Uri(googleSearchUrl);
-                UrlBox.IsDropDownOpen = false;  // Close the dropdown once the selection is made
-            }
-        }
-
-        private void UrlBox_DropDownClosed(object sender, object e)
-        {
-            // Ensure dropdown closes when the user clicks elsewhere
-            UrlBox.IsDropDownOpen = false;
         }
         private async void ScreenshotButton_Click(object sender, RoutedEventArgs e)
         {
@@ -156,7 +117,8 @@ namespace BrowserUI
             picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
             picker.SuggestedFileName = "Screenshot";
             picker.FileTypeChoices.Add("PNG Image", new[] { ".png" });
-
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
             var file = await picker.PickSaveFileAsync();
             if (file != null)
             {
@@ -171,6 +133,13 @@ namespace BrowserUI
         {
             SettingsWindow settingsWindow = new SettingsWindow();
             settingsWindow.Activate();
+        }
+        private void UrlBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == VirtualKey.Enter)
+            {
+                GoButton_Click(sender, e);
+            }
         }
     }
 }
@@ -197,4 +166,3 @@ public class MainViewModel : INotifyPropertyChanged
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }
-

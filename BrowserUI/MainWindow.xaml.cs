@@ -22,6 +22,8 @@ using System.Text.Json;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using Windows.System;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.UI;
 
 
 namespace BrowserUI
@@ -52,6 +54,61 @@ namespace BrowserUI
         private void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             WebView.Reload();
+        }
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenHomepageInNewTab();
+        }
+
+        private void AddTabButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenHomepageInNewTab();
+        }
+
+        private void OpenHomepageInNewTab()
+        {
+            // Create a new tab for the homepage
+            var newTab = new PivotItem
+            {
+                Header = "Homepage",
+                Content = new Grid
+                {
+                    Children = {
+                    new TextBox
+                    {
+                        Name = "SearchBar",
+                        Width = 600,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        PlaceholderText = "Search or enter URL"
+                    }
+                }
+                }
+            };
+
+            TabPanel.Items.Insert(TabPanel.Items.Count - 1, newTab);  // Insert before the '+' tab
+            TabPanel.SelectedItem = newTab;
+            UpdateTabHighlighting();
+        }
+
+        private void TabPanel_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            UpdateTabHighlighting();
+        }
+
+        private void UpdateTabHighlighting()
+        {
+            foreach (PivotItem tab in TabPanel.Items)
+            {
+                if (tab != TabPanel.SelectedItem)
+                {
+                    tab.Background = new SolidColorBrush(Microsoft.UI.Colors.LightGray);  // Inactive tabs are darker
+                }
+                else
+                {
+                    tab.Background = new SolidColorBrush(Microsoft.UI.Colors.Gray);  // Highlight active tab
+                }
+            }
         }
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
@@ -141,28 +198,31 @@ namespace BrowserUI
                 GoButton_Click(sender, e);
             }
         }
+        
     }
-}
-public class MainViewModel : INotifyPropertyChanged
-{
-    private string _searchQuery;
-    public string SearchQuery
+
+    public class MainViewModel : INotifyPropertyChanged
     {
-        get => _searchQuery;
-        set
+        private string _searchQuery;
+        public string SearchQuery
         {
-            if (_searchQuery != value)
+            get => _searchQuery;
+            set
             {
-                _searchQuery = value;
-                OnPropertyChanged(nameof(SearchQuery));
+                if (_searchQuery != value)
+                {
+                    _searchQuery = value;
+                    OnPropertyChanged(nameof(SearchQuery));
+                }
             }
         }
-    }
 
-    public event PropertyChangedEventHandler PropertyChanged;
+        public event PropertyChangedEventHandler PropertyChanged;
 
-    protected virtual void OnPropertyChanged(string propertyName)
-    {
-        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
     }
 }
+//yes  

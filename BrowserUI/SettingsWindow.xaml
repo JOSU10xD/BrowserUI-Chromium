@@ -9,7 +9,14 @@
     mc:Ignorable="d">
 
     <StackPanel>
-    <TextBlock Text="Settings" FontSize="24" Margin="10" />
-        <TextBlock Text="Coming soon: Configure browser options here!" />
+        <TextBlock Text="Settings" FontSize="24" Margin="10" />
+        <ComboBox x:Name="SearchEngineSelector" SelectionChanged="SearchEngineSelector_SelectionChanged">
+            <ComboBoxItem Content="Google" IsSelected="True" />
+            <ComboBoxItem Content="Bing" />
+            <ComboBoxItem Content="Yahoo" />
+        </ComboBox>
+        <Button Content="Change Background Color" Click="ChangeBackgroundColor_Click" />
+        <Button Content="Add Background Image" Click="AddBackgroundImage_Click" />
+        <Button Content="Reset to Default" Click="ResetHomepageSettings_Click" />
     </StackPanel>
 </Window>

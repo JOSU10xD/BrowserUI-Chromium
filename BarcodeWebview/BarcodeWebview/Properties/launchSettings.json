@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "BarcodeWebview (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "BarcodeWebview (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

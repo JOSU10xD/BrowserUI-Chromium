@@ -22,12 +22,11 @@ using Windows.UI;
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
 namespace BrowserUI
-{
-    /// <summary>
-    /// Provides application-specific behavior to supplement the default Application class.
-    /// </summary>
-    /// 
-
+/// <summary>
+/// Provides application-specific behavior to supplement the default Application class.
+/// </summary>
+/// 
+{ 
     public partial class App : Application
     {
         public static Uri HomepageBackgroundImage { get; set; } = null;

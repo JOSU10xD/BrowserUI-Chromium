@@ -6,52 +6,38 @@
     xmlns:local="using:BrowserUI"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d"
-    Title="BrowserUI">
+    xmlns:floatingtabs="using:BrowserUI.Controls">
+
+    <Window.SystemBackdrop>
+        <MicaBackdrop Kind="BaseAlt" />
+    </Window.SystemBackdrop>
+
+    <Window.Title>
+        WBrowserUI
+    </Window.Title>
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        
-        <!-- Top Bar -->
-        <StackPanel Orientation="Horizontal">
-            <Button Content="Back" Click="BackButton_Click" />
-            <Button Content="Forward" Click="ForwardButton_Click" />
-            <Button Content="Refresh" Click="RefreshButton_Click" />
-            <Button Content="Home" Click="HomeButton_Click" />
-            <ComboBox x:Name="UrlBox" IsEditable="True" Width="400" Loaded="UrlBox_Loaded" KeyDown="UrlBox_KeyDown" PlaceholderText="Search..">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate>
-                        <TextBlock Text="{Binding}" />
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-            <Button Content="Go" Click="GoButton_Click" />
-            <Button Content="Settings" Click="SettingsButton_Click" />
-            <Button Content="Screenshot" Click="ScreenshotButton_Click" />
-        </StackPanel>
+        <floatingtabs:FireBrowserTabViewContainer x:Name="Tabs"
+      Visibility="Visible"
+      x:FieldModifier="public"
+      Padding="0"
+      VerticalAlignment="Stretch"
+      Mode="Modern"
+      Grid.Row="0"
+     Loaded="Tabs_Loaded"
+      >
+            <floatingtabs:FireBrowserTabViewContainer.TabStripHeader>
+                <PersonPicture  Width="32" Height="32"  Margin="5,0,0,0"/>
+            </floatingtabs:FireBrowserTabViewContainer.TabStripHeader>
+            <floatingtabs:FireBrowserTabViewContainer.TabStripFooter>
+                <Grid x:Name="Apptitlebar" IsHitTestVisible="False" MinWidth="175" LayoutUpdated="Apptitlebar_LayoutUpdated"/>
+            </floatingtabs:FireBrowserTabViewContainer.TabStripFooter>
+        </floatingtabs:FireBrowserTabViewContainer>
 
-        <!-- Tab Control -->
-        <controls:Pivot x:Name="TabPanel" Grid.Row="1" SelectionChanged="TabPanel_SelectionChanged">
+        <Grid>
 
-            <!-- Home Tab -->
-            <controls:PivotItem Header="Homepage" Name="HomeTab">
-                <Grid Background="LightCyan">
-                    <TextBox Name="SearchBar" Width="600" HorizontalAlignment="Center" VerticalAlignment="Center" PlaceholderText="Search or enter URL" />
-                </Grid>
-            </controls:PivotItem>
-
-            <!-- Add Tab Button -->
-            <controls:PivotItem Header="+" Name="AddTabButton">
-                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="Add a new tab" />
-            </controls:PivotItem>
-
-        </controls:Pivot>
-
-        <!-- WebView2 Browser -->
-        <controls:WebView2 x:Name="WebView" Grid.Row="1" />
+        </Grid>
     </Grid>
+
 </Window>

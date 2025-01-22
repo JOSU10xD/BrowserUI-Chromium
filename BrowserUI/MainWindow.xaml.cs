@@ -19,6 +19,17 @@ using BrowserUICore.Helpers;
 using Windows.UI.WindowManagement;
 using BrowserUI.Controls;
 using BrowserUI.Pages;
+using Windows.UI.WebUI;
+using Microsoft.Web.WebView2.Core;
+using Windows.Graphics.Imaging;
+using System.Net.Http;
+using System.Text.Json;
+using System.Collections.ObjectModel;
+using System.ComponentModel;
+using Windows.System;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Windows.Storage.Pickers;
+
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -35,9 +46,95 @@ namespace BrowserUI
         public MainWindow()
         {
             this.InitializeComponent();
+            
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
+
         }
+        #region Topbar
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+    selectedTab.Content is Frame frame &&
+    frame.Content is NewTab newTabPage)
+            {
+                newTabPage.BackButton_Click(sender, e);
+            }
+
+        }
+
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.ForwardButton_Click(sender, e);
+            }
+        }
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.RefreshButton_Click(sender, e);
+            }
+        }
+        private void GoButton_Click(object sender, RoutedEventArgs e)
+        {
+            string input = UrlBox.Text;
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+                selectedTab.Content is Frame frame &&
+                frame.Content is NewTab newTabPage)
+            {
+                newTabPage.GoButton_Click(sender, e, input);
+            }
+        }
+        private void UrlBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (UrlBox.FindName("PART_EditableTextBox") is TextBox textBox)
+            {
+                textBox.TextChanged += UrlBox_TextChanged;
+            }
+        }
+        private async void UrlBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string query = UrlBox.Text;
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                try
+                {
+                    using HttpClient client = new();
+                    string url = $"https://suggestqueries.google.com/complete/search?client=firefox&q={Uri.EscapeDataString(query)}";
+                    var response = await client.GetStringAsync(url);
+
+                    // Parse JSON response
+                    var suggestions = JsonSerializer.Deserialize<List<object>>(response);
+                    if (suggestions != null && suggestions.Count > 1 && suggestions[1] is JsonElement suggestionArray)
+                    {
+                        var searchSuggestions = suggestionArray.EnumerateArray().Select(x => x.GetString()).Where(x => x != null).ToList();
+                        UrlBox.ItemsSource = new ObservableCollection<string>(searchSuggestions);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle errors (e.g., network issues)
+                    Console.WriteLine($"Error fetching suggestions: {ex.Message}");
+                }
+            }
+        }
+
+
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            SettingsWindow settingsWindow = new SettingsWindow();
+            settingsWindow.Activate();
+        }
+
+        #endregion
 
         #region TitleBar
 
@@ -46,7 +143,7 @@ namespace BrowserUI
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             Microsoft.UI.WindowId windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-            appWindow.SetIcon("Logo.ico");
+            appWindow.SetIcon("brwlog.ico");
 
 
             if (!Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported())
@@ -199,4 +296,6 @@ namespace BrowserUI
 
         #endregion
     }
+    
+
 }

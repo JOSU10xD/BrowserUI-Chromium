@@ -13,6 +13,7 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
+    <Content Remove="Assets\edge_browser_logo_icon_152998.ico" />
     <Content Remove="Assets\Segoe Fluent Icons.ttf" />
   </ItemGroup>
   <ItemGroup>

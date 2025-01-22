@@ -7,14 +7,16 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    xmlns:floatingtabs="using:BrowserUI.Controls">
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:floatingtabs="using:BrowserUI.Controls"
+    xmlns:icons="using:BrowserUI.Controls">
 
     <Window.SystemBackdrop>
         <MicaBackdrop Kind="BaseAlt" />
     </Window.SystemBackdrop>
 
     <Window.Title>
-        WBrowserUI
+        BrowserUI
     </Window.Title>
 
     <Grid>
@@ -35,8 +37,36 @@
             </floatingtabs:FireBrowserTabViewContainer.TabStripFooter>
         </floatingtabs:FireBrowserTabViewContainer>
 
-        <Grid>
+        <Grid x:Name="TopBar" Height="37" x:FieldModifier="Public" Margin="0,40,0,0" VerticalAlignment="Top" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
 
+            <!-- Top Bar -->
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <Button x:Name="BackButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}" Click="BackButton_Click" />
+                <Button x:Name="FrontButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72A;}" Click="ForwardButton_Click" />
+                <Button x:Name="ReloadButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72C;}" Click="RefreshButton_Click" />
+                <Button x:Name="HomeButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>
+            </StackPanel>
+            <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
+                <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>
+                <Button x:Name="SecureLock" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public">
+                    <Button.Content>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE72F;" />
+                    </Button.Content>
+                </Button>
+                <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public" HorizontalAlignment="Left" Click="GoButton_Click">
+                    <Button.Content>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
+                    </Button.Content>
+                </Button>
+            </Grid>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <Button   Click="SettingsButton_Click" Content="{icons:FluentIcon Glyph=&#xE713;}" />
+            </StackPanel>
         </Grid>
     </Grid>
 

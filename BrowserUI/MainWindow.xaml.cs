@@ -134,6 +134,17 @@ frame.Content is NewTab newTabPage)
             settingsWindow.Activate();
         }
 
+        private async void ScreenshotButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.ScreenshotButton_Click(sender, e);
+            }
+        }
+
+
         #endregion
 
         #region TitleBar

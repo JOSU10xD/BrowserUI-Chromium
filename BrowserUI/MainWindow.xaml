@@ -46,11 +46,59 @@
 
             <!-- Top Bar -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Button x:Name="BackButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}" Click="BackButton_Click"/>
+                <!--<Button x:Name="BackButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}" Click="BackButton_Click"/>
                 <Button x:Name="FrontButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72A;}" Click="ForwardButton_Click" />
                 <Button x:Name="ReloadButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72C;}" Click="RefreshButton_Click" />
-                <Button x:Name="HomeButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>
+                <Button x:Name="HomeButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>-->
+                <AppBarButton Click="BackButton_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+FontFamily="Segoe Fluent Icons" 
+Glyph="&#xE72B;" 
+FontSize="16" 
+Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+
+                <AppBarButton Label="Forward" Click="ForwardButton_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+            FontFamily="Segoe Fluent Icons" 
+            Glyph="&#xE72A;" 
+            FontSize="16" 
+            Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+
+                <AppBarButton Label="Refresh" Click="RefreshButton_Click">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+ FontFamily="Segoe Fluent Icons" 
+ Glyph="&#xE72C;" 
+ FontSize="16" 
+ Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton>
+                    <AppBarButton.Icon>
+                        <FontIcon 
+ FontFamily="Segoe Fluent Icons" 
+ Glyph="&#xE80F;" 
+ FontSize="16"
+ 
+ Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <!--<Button x:Name="BackButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}" Click="BackButton_Click" />
+    <Button x:Name="FrontButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72A;}" Click="ForwardButton_Click" />
+    <Button x:Name="ReloadButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72C;}" Click="RefreshButton_Click" />
+    <Button x:Name="HomeButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>-->
             </StackPanel>
+
+
+
+
             <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
                 <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>
                 <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public" HorizontalAlignment="Left" Click="GoButton_Click">

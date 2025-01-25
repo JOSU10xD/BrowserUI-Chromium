@@ -52,50 +52,46 @@
                 <Button x:Name="HomeButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>-->
                 <AppBarButton Click="BackButton_Click">
                     <AppBarButton.Icon>
-                        <FontIcon 
-FontFamily="Segoe Fluent Icons" 
-Glyph="&#xE72B;" 
-FontSize="16" 
-Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                                <FontIcon 
+                        FontFamily="Segoe Fluent Icons" 
+                        Glyph="&#xE72B;" 
+                        FontSize="16" 
+                        Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />   
                     </AppBarButton.Icon>
                 </AppBarButton>
-
-
                 <AppBarButton Label="Forward" Click="ForwardButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
-            FontFamily="Segoe Fluent Icons" 
-            Glyph="&#xE72A;" 
-            FontSize="16" 
-            Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                                FontFamily="Segoe Fluent Icons" 
+                                Glyph="&#xE72A;" 
+                                FontSize="16" 
+                                Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-
                 <AppBarButton Label="Refresh" Click="RefreshButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
- FontFamily="Segoe Fluent Icons" 
- Glyph="&#xE72C;" 
- FontSize="16" 
- Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                             FontFamily="Segoe Fluent Icons" 
+                                 Glyph="&#xE72C;" 
+                                 FontSize="16" 
+                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />  
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton>
                     <AppBarButton.Icon>
                         <FontIcon 
- FontFamily="Segoe Fluent Icons" 
- Glyph="&#xE80F;" 
- FontSize="16"
- 
- Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                                 FontFamily="Segoe Fluent Icons" 
+                                 Glyph="&#xE80F;" 
+                                 FontSize="16"
+                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
+ 
+
+
+
                
             </StackPanel>
-
-
-
-
             <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
                 <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>
                 <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public" HorizontalAlignment="Left" Click="GoButton_Click">
@@ -105,34 +101,33 @@ Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
                 </Button>
             </Grid>
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                
                 <!--<Button   Click="SettingsButton_Click" Content="{icons:FluentIcon Glyph=&#xE713;}" />
                 <Button   Click="ScreenshotButton_Click" Content="{icons:FluentIcon Glyph=&#xE722;}" />-->
                 <AppBarButton Click="SettingsButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
-  FontFamily="Segoe Fluent Icons" 
-    Glyph="&#xE713;" 
-  FontSize="16" 
-  Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                              FontFamily="Segoe Fluent Icons" 
+                                Glyph="&#xE713;" 
+                              FontSize="16" 
+                              Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
                 <AppBarButton Label="Screenshot" Click="ScreenshotButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
-           FontFamily="Segoe Fluent Icons" 
-              Glyph="&#xECCD;" 
-           FontSize="16" 
-           Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                           FontFamily="Segoe Fluent Icons" 
+                              Glyph="&#xECCD;" 
+                           FontSize="16" 
+                           Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />    
                     </AppBarButton.Icon>
                 </AppBarButton >
                 <AppBarButton>
                     <AppBarButton.Icon>
                         <FontIcon
-             FontFamily="Segoe Fluent Icons" 
-                  Glyph="&#xED14;" 
-                FontSize="16" 
-                Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                             FontFamily="Segoe Fluent Icons" 
+                                  Glyph="&#xED14;" 
+                                FontSize="16" 
+                                Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
             </StackPanel>
@@ -140,3 +135,8 @@ Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
     </Grid>
 
 </Window>
+                
+
+
+
+

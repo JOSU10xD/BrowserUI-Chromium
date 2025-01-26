@@ -95,9 +95,43 @@
                     </Button.Content>
                 </Button>
             </Grid>
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
+            <StackPanel Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Center">
                 <!--<Button   Click="SettingsButton_Click" Content="{icons:FluentIcon Glyph=&#xE713;}" />
                 <Button   Click="ScreenshotButton_Click" Content="{icons:FluentIcon Glyph=&#xE722;}" />-->
+
+                <AppBarButton x:Name="Addfav" Tag="AddFavourFlyout" Visibility="Visible">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+            FontFamily="Segoe Fluent Icons" 
+            Glyph="&#xE734;"
+            FontSize="16" 
+            Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                    <AppBarButton.Flyout>
+                        <Flyout Placement="Bottom" AllowFocusOnInteraction="True" >
+                            <Grid MaxWidth="325">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" MinWidth="300" FontSize="20" Text="Add Favorite"/>
+                                <TextBlock Grid.Row="1" Text="Name" Margin="5"/>
+                                <TextBox Grid.Row="2" x:Name="Name"/>
+                                <TextBlock Grid.Row="3" Text="URL" Margin="5"/>
+                                <TextBox Grid.Row="4" x:Name="FaveTitle"/>
+                                <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button  Width="Auto" Tag="AddFav" Margin="10" Content="ADD" Padding="15"/>
+                                </StackPanel>
+                            </Grid>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
+
+
                 <AppBarButton Click="SettingsButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
@@ -128,6 +162,8 @@
             </StackPanel>
         </Grid>
     </Grid>
+                                    
+
 
 </Window>
                 

@@ -127,7 +127,7 @@
                         Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />   
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="Forward" Click="ForwardButton_Click">
+                <AppBarButton  Click="ForwardButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
                                 FontFamily="Segoe Fluent Icons" 
@@ -136,7 +136,7 @@
                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
                     </AppBarButton.Icon>
                 </AppBarButton>
-                <AppBarButton Label="Refresh" Click="RefreshButton_Click">
+                <AppBarButton  Click="RefreshButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
                              FontFamily="Segoe Fluent Icons" 

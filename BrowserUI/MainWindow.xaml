@@ -197,7 +197,7 @@
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton Label="Screenshot" Click="ScreenshotButton_Click">
+                <AppBarButton  Click="ScreenshotButton_Click">
                     <AppBarButton.Icon>
                         <FontIcon 
                             FontFamily="Segoe Fluent Icons" 

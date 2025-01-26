@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using BrowserUICore.Models;
+using BrowserUI.Pages;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
@@ -51,5 +52,26 @@ namespace BrowserUI.Controls
         typeof(Settings.UILayout),
         typeof(FireBrowserTabViewContainer),
         null);
+
+        private void Tabs_AddTabButtonClick(TabView sender, object args)
+        {
+            // Add a new tab
+            var newTab = new FireBrowserTabViewItem
+            {
+                Header = "New Tab",
+                Content = new Frame { SourcePageType = typeof(NewTab) }
+            };
+            TabItems.Add(newTab);
+        }
+
+        // Event handler for closing a tab
+        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            {
+                newTabPage.Dispose(); // Dispose of WebView2 resources
+            }
+            TabItems.Remove(args.Item);
+        }
     }
 }

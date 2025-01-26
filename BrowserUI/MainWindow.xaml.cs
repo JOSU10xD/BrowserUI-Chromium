@@ -51,6 +51,31 @@ namespace BrowserUI
             TitleTop();
 
         }
+
+                private void Tabs_AddTabButtonClick(TabView sender, object args)
+        {
+            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
+        }
+
+        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            {
+                newTabPage.Dispose(); // Dispose of WebView2 resources
+            }
+            Tabs.TabItems.Remove(args.Item);
+        }
+
+        private void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+                selectedTab.Content is Frame frame &&
+                frame.Content is NewTab newTabPage)
+            {
+                newTabPage.GoHome();
+            }
+        }
+
         #region Topbar
 
         private void BackButton_Click(object sender, RoutedEventArgs e)

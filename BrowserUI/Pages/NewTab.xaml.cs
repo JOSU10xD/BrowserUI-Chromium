@@ -25,6 +25,17 @@ namespace BrowserUI.Pages
             this.InitializeComponent();
             WebView.Source = new Uri("https://www.google.com");
         }
+        public void Dispose()
+        {
+            WebView?.Close(); 
+            WebView?.CoreWebView2?.Stop(); 
+            WebView = null;
+        }
+
+        public void GoHome()
+        {
+            WebView.Source = new Uri("https://www.google.com");
+        }
         public void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (WebView.CanGoBack)

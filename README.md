@@ -61,6 +61,7 @@ dotnet run
 
 ## 📂Project Structers
 
+```bash
 WebView2-Browser/
 │── assets/          # Images, icons, and other assets
 │── src/             # Source code
@@ -70,6 +71,7 @@ WebView2-Browser/
 │── README.md        # Project documentation
 │── LICENSE          # License info
 └── .gitignore       # Git ignore rules
+```
 
 ## 🤝 Contributing
 🙌 **Contributions are welcome! To contribute:**

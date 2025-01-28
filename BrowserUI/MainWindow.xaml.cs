@@ -49,10 +49,21 @@ namespace BrowserUI
             
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
+            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+            var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
+            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
+
+            // Set the icon
+            appWindow.SetIcon("Assets/browserlogo.ico");
 
         }
 
-                private void Tabs_AddTabButtonClick(TabView sender, object args)
+
+        private void Tabs_AddTabButtonClick(TabView sender, object args)
+        {
+            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
+        }
+        private void Tabs_Add(object sender, RoutedEventArgs args)
         {
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
         }
@@ -151,7 +162,6 @@ frame.Content is NewTab newTabPage)
                 }
             }
         }
-
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {

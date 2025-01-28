@@ -18,8 +18,77 @@
     <Window.Title>
         BrowserUI
     </Window.Title>
+    
 
     <Grid>
+
+        <!--flyout-->
+        <Grid.Resources>
+            <Flyout x:Name="Moreflyout">
+                <StackPanel Width="250">
+                    <StackPanel Name="menuHeader">
+                        <Button IsEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" BorderBrush="Transparent" Background="Transparent" Margin="0,0,0,10">
+                            <StackPanel Orientation="Horizontal">
+                                <!--SETTINGS THE CONTENT OF MAIN USER BUTTON-->
+                                <PersonPicture Width="45" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock x:Name="username" Text="Albin" Style="{ThemeResource SubtitleTextBlockStyle}" FontSize="15"/>
+                                    <TextBlock Text="local Account" FontSize="12"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+                        <!--These will separate the content"-->
+                        <Border BorderBrush="{ThemeResource ApplicationHeaderForegroundThemeBrush}" Opacity="0.3" Margin="10,5,10,10" BorderThickness="1"/>
+
+                        <Button Tag="NewTab" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE710;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="New Tab"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="NewWindow" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" >
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC6C;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="New Window"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="NewPrivate" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True"   >
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}"    Glyph="&#xE90F;"  FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="New private Window"/>
+                            </StackPanel>
+                        </Button>
+                        <Border BorderBrush="{ThemeResource ApplicationHeaderForegroundThemeBrush}" Opacity="0.3" Margin="10,10,10,10" BorderThickness="1"/>
+                        <Button Tag="History" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE81c;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="History"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="Downloads" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" >
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE896;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="Downloads"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="Bookmarks" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True"   >
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}"    Glyph="&#xE728;"  FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="Bookmarks"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="settings" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" Click="SettingsButton_Click" >
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}"    Glyph="&#xE713;"  FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <TextBlock Margin="10,0,0,0" Text="Settings"/>
+                            </StackPanel>
+                        </Button>
+
+                    </StackPanel>
+                </StackPanel>
+            </Flyout>
+        </Grid.Resources>
+
         <floatingtabs:FireBrowserTabViewContainer x:Name="Tabs"
       Visibility="Visible"
       x:FieldModifier="public"
@@ -48,10 +117,33 @@
 
             <!-- Top Bar -->
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <Button x:Name="BackButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}" Click="BackButton_Click"/>
-                <Button x:Name="FrontButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72A;}" Click="ForwardButton_Click" />
-                <Button x:Name="ReloadButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72C;}" Click="RefreshButton_Click" />
-                <Button x:Name="HomeButton" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}" Click="HomeButton_Click" />
+                <AppBarButton Click="BackButton_Click"  Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+                        FontFamily="Segoe Fluent Icons" 
+                        Glyph="&#xE72B;" 
+                        FontSize="15"
+                        Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton  Click="ForwardButton_Click" Margin="0, -5, 0, 0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+                                FontFamily="Segoe Fluent Icons" 
+                                Glyph="&#xE72A;" 
+                                FontSize="16" 
+                                Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
+                <AppBarButton  Click="RefreshButton_Click" Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+                             FontFamily="Segoe Fluent Icons" 
+                                 Glyph="&#xE72C;" 
+                                 FontSize="16" 
+                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                </AppBarButton>
             </StackPanel>
             <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
                 <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>

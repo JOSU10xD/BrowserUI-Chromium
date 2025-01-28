@@ -1,114 +1,86 @@
-# WebView2 Browser - WinUI 3
+# 🌐 WebView2 Browser - Built with WinUI 3  
 
-![Project Banner](https://via.placeholder.com/1200x400.png?text=WebView2+Browser+Banner)  
-*(Replace the above placeholder with your project banner or logo)*
+![WebView2 Banner](./assets/banner.png)  
 
-A modern, lightweight, and feature-rich web browser built using **WebView2** and **WinUI 3**. Designed for Windows users, this browser aims to provide a seamless browsing experience with low resource usage and advanced features.
-
----
-
-## Table of Contents
-- [Introduction](#introduction)
-- [Features](#features)
-- [Screenshots](#screenshots)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Contributing](#contributing)
-- [License](#license)
+## 🚀 Overview  
+This project is a **lightweight, feature-rich browser** built using **WinUI 3** and powered by **WebView2**. It offers a seamless browsing experience with a focus on **performance, privacy, and efficiency**.  
 
 ---
 
-## Introduction
+## 📸 Screenshots  
+> Add images/screenshots of your browser here.  
 
-The **WebView2 Browser** is a lightweight and efficient web browser designed for Windows, leveraging the power of **Microsoft Edge's WebView2** and the modern **WinUI 3** framework. It provides a fast, secure, and customizable browsing experience while keeping system resource usage low.
-
-### Built With
-- **WebView2**: Microsoft's modern web engine for embedding web content in applications.
-- **WinUI 3**: The latest native UI framework for building Windows apps.
+![Screenshot 1](./assets/screenshot1.png)  
+![Screenshot 2](./assets/screenshot2.png)  
 
 ---
 
-## Features
+## 🏗️ Tech Stack  
 
-### Current Features
-- **Low RAM Usage**: Optimized to use minimal system resources.
-- **Modern UI**: Clean and intuitive user interface built with WinUI 3.
-- **WebView2 Integration**: Utilizes the latest web technologies for fast and secure browsing.
-- **Tabs Support**: Easily manage multiple tabs for efficient browsing.
-- **Clipboard Integration**: Copy and paste URLs or text seamlessly.
-- **Screenshot Tool**: Capture and save screenshots of web pages directly from the browser.
-
-### Planned Features
-- **Dark/Light Mode**: Switch between themes for a personalized experience.
-- **Ad Blocker**: Built-in ad blocker for a cleaner browsing experience.
-- **Bookmarks Manager**: Save and organize your favorite websites.
-- **RAM Usage Monitor**: Real-time monitoring of browser memory usage.
-- **Customizable Shortcuts**: Assign shortcuts for frequently used actions.
-- **Privacy Mode**: Browse without saving history or cookies.
+- **[WebView2](https://learn.microsoft.com/en-us/microsoft-edge/webview2/)** - Embeds Microsoft Edge Chromium into the app.  
+- **[WinUI 3](https://learn.microsoft.com/en-us/windows/apps/winui/winui3/)** - The modern native UI framework for Windows apps.  
+- **C++/WinRT or C# (.NET 6/7)** - Core development language options.  
+- **XAML** - UI design.  
 
 ---
 
-## Screenshots
+## 🔥 Features (Implemented & Planned)  
 
-![Screenshot 1](https://via.placeholder.com/800x400.png?text=Screenshot+1+Placeholder)  
-*(Replace with an actual screenshot of your browser)*
+### ✅ Core Features  
+✔️ **Fast & Lightweight** – Uses WebView2 for optimized browsing.  
+✔️ **Minimal RAM Usage** – Designed for efficiency.  
+✔️ **Custom UI** – Sleek, modern, and adaptable UI.  
 
-![Screenshot 2](https://via.placeholder.com/800x400.png?text=Screenshot+2+Placeholder)  
-*(Replace with an actual screenshot of your browser)*
+### 🛠️ Upcoming Features  
+🔹 **Clipboard Management** – Copy/Paste enhancements.  
+🔹 **Built-in Screenshot Tool** – Capture and save webpages easily.  
+🔹 **Resource Usage Monitoring** – See RAM and CPU usage.  
+🔹 **Privacy Mode** – No history, no tracking.  
+🔹 **Extensions Support** – Experimental WebView2 extensions.  
+🔹 **Download Manager** – Handle file downloads natively.  
 
 ---
 
-## Installation
+## 🛠️ Installation  
 
-### Prerequisites
-- **Windows 10/11**: The browser is designed for Windows operating systems.
-- **WebView2 Runtime**: Ensure the WebView2 Runtime is installed on your system. [Download here](https://developer.microsoft.com/en-us/microsoft-edge/webview2/).
+1. **Clone the repository**  
+   ```sh
+   git clone https://github.com/yourusername/WebView2-Browser.git
+   cd WebView2-Browser
+   ```
+2. **Install dependencies (ensure you have WinUI 3 SDK & WebView2 runtime)**
 
-### Steps
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/webview2-browser.git
-Open the project in Visual Studio 2022.
+- Download WinUI 3 SDK
+- Install WebView2 Runtime
+- Run the project
 
-Build and run the project.
+```sh
+dotnet build
+dotnet run
+```
 
-Usage
-Launch the browser.
+## 📂Project Structers
 
-Enter a URL in the address bar and press Enter.
+WebView2-Browser/
+│── assets/          # Images, icons, and other assets
+│── src/             # Source code
+│   ├── views/       # XAML UI files
+│   ├── models/      # Data models
+│   ├── services/    # Browser logic
+│── README.md        # Project documentation
+│── LICENSE          # License info
+└── .gitignore       # Git ignore rules
 
-Use the toolbar to navigate, take screenshots, or manage tabs.
+## 🤝 Contributing
+🙌 **Contributions are welcome! To contribute:**
 
-Right-click on the page to access additional options like copying text or saving images.
+-Fork the repository
+-Create a new branch (feature/new-feature)
+-Commit your changes
+-Push and submit a PR
 
-Contributing
-We welcome contributions! If you'd like to contribute to the project, please follow these steps:
+## 📜 License
+**This project is licensed under the MIT License.**
 
-Fork the repository.
 
-Create a new branch (git checkout -b feature/YourFeatureName).
 
-Commit your changes (git commit -m 'Add some feature').
-
-Push to the branch (git push origin feature/YourFeatureName).
-
-Open a pull request.
-
-Please ensure your code follows the project's coding standards.
-
-License
-This project is licensed under the MIT License. See the LICENSE file for details.
-
-Acknowledgments
-Microsoft for providing WebView2 and WinUI 3.
-
-Contributors who helped make this project a reality.
-
-Contact
-For questions or feedback, feel free to reach out:
-
-Email: your-email@example.com
-
-GitHub Issues: Open an Issue
-
-Happy Browsing! 🚀

@@ -1,6 +1,6 @@
 # 🌐 WebView2 Browser - Built with WinUI 3  
 
-![WebView2 Banner](./assets/banner.png)  
+![WebView2 Banner](./Assets/browserlogo.ico)  
 
 ## 🚀 Overview  
 This project is a **lightweight, feature-rich browser** built using **WinUI 3** and powered by **WebView2**. It offers a seamless browsing experience with a focus on **performance, privacy, and efficiency**.  
@@ -10,8 +10,8 @@ This project is a **lightweight, feature-rich browser** built using **WinUI 3** 
 ## 📸 Screenshots  
 > Add images/screenshots of your browser here.  
 
-![Screenshot 1](./assets/screenshot1.png)  
-![Screenshot 2](./assets/screenshot2.png)  
+![Screenshot 1](./Assets/brw1.png)  
+![Screenshot 2](./Assets/brw2.png)  
 
 ---
 
@@ -82,7 +82,7 @@ WebView2-Browser/
 -Push and submit a PR
 
 ## 📜 License
-**This project is licensed under the MIT License.**
+ This project is licensed under the **MIT License**. See the [LICENSE](./LICENSE) file for details.  
 
 
 

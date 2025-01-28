@@ -18,20 +18,21 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
 
-// To learn more about WinUI, the WinUI project structure,
-// and more about our project templates, see: http://aka.ms/winui-project-info.
+
 
 namespace BrowserUI
-/// <summary>
-/// Provides application-specific behavior to supplement the default Application class.
-/// </summary>
-/// 
-{ 
+{
+    /// <summary>
+    /// Provides application-specific behavior to supplement the default Application class.
+    /// </summary>
     public partial class App : Application
     {
         public static Uri HomepageBackgroundImage { get; set; } = null;
         public static Windows.UI.Color? HomepageBackgroundColor { get; set; } = Colors.LightCyan;
         public static string DefaultSearchEngine { get; set; } = "Google";
+
+        public static MainWindow MainWindow { get; private set; }
+
         public App()
         {
             this.InitializeComponent();
@@ -39,10 +40,8 @@ namespace BrowserUI
 
         protected override void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            m_window = new MainWindow();
-            m_window.Activate();
+            MainWindow = new MainWindow();
+            MainWindow.Activate();
         }
-
-        private Window? m_window;
     }
 }

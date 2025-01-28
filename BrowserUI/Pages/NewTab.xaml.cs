@@ -70,28 +70,31 @@ namespace BrowserUI.Pages
                 WebView.Source = new Uri(googleSearchUrl);
             }
         }
-        public async void ScreenshotButton_Click(object sender, RoutedEventArgs e)
+        public async void CaptureScreenshot(object sender, RoutedEventArgs e)
         {
-            var coreWebView2 = WebView.CoreWebView2;
-            if (coreWebView2 == null)
+            var picker = new FileSavePicker
             {
-                await WebView.EnsureCoreWebView2Async();
-                coreWebView2 = WebView.CoreWebView2;
-            }
-            var picker = new FileSavePicker();
-            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-            picker.SuggestedFileName = "Screenshot";
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+                SuggestedFileName = "Screenshot"
+            };
             picker.FileTypeChoices.Add("PNG Image", new[] { ".png" });
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
+
+            // Get the window handle for the MainWindow
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
             WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
             var file = await picker.PickSaveFileAsync();
+
             if (file != null)
             {
-                using (var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite))
-                {
-                    await coreWebView2.CapturePreviewAsync(CoreWebView2CapturePreviewImageFormat.Png, stream);
-                }
+                using var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+
+                await WebView.CoreWebView2.CapturePreviewAsync(
+                    CoreWebView2CapturePreviewImageFormat.Png,
+                    stream
+                );
             }
         }
+
     }
 }

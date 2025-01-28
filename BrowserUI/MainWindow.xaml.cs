@@ -165,7 +165,7 @@ frame.Content is NewTab newTabPage)
 selectedTab.Content is Frame frame &&
 frame.Content is NewTab newTabPage)
             {
-                newTabPage.ScreenshotButton_Click(sender, e);
+                newTabPage.CaptureScreenshot(sender, e);
             }
         }
 

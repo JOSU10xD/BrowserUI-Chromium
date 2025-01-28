@@ -52,7 +52,7 @@ This project is a **lightweight, feature-rich browser** built using **WinUI 3** 
 
 - Download WinUI 3 SDK
 - Install WebView2 Runtime
-- Run the project
+3. **Run the project**
 
 ```sh
 dotnet build

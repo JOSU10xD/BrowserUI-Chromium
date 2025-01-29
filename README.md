@@ -8,7 +8,6 @@ This project is a **lightweight, feature-rich browser** built using **WinUI 3** 
 ---
 
 ## 📸 Screenshots  
-> Add images/screenshots of your browser here.  
 
 ![Screenshot 1](./BrowserUI/Assets/brw1.png)  
 ![Screenshot 2](./BrowserUI/Assets/brw2.png)  

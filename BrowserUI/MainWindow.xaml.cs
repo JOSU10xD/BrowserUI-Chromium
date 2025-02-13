@@ -43,6 +43,7 @@ namespace BrowserUI
     {
         private Microsoft.UI.Windowing.AppWindow appWindow;
         private Microsoft.UI.Windowing.AppWindowTitleBar titleBar;
+        private bool isBookmarked = false;
         public MainWindow()
         {
             this.InitializeComponent();
@@ -53,12 +54,18 @@ namespace BrowserUI
             var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
-            // Set the icon
-            appWindow.SetIcon("Assets/browserlogo.ico");
 
         }
 
-
+       // private void ClipBoardclick(object sender, RoutedEventArgs e)
+       // {
+       //     if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+       //         selectedTab.Content is Frame frame &&
+       //         frame.Content is ClipBoard cl)
+       //     {
+       //         cl.WriteStringToClipboard(s);
+       //    }
+       // } 
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
@@ -116,6 +123,19 @@ selectedTab.Content is Frame frame &&
 frame.Content is NewTab newTabPage)
             {
                 newTabPage.RefreshButton_Click(sender, e);
+            }
+        }
+        private void Bookmarks_Click(object sender, RoutedEventArgs e)
+        {
+            isBookmarked = !isBookmarked; // Toggle bookmark state
+
+            if (isBookmarked)
+            {
+                BookmarkIcon.Glyph = "\uE735"; // Change to filled bookmark icon
+            }
+            else
+            {
+                BookmarkIcon.Glyph = "\uE7C3"; // Change to unfilled bookmark icon
             }
         }
         private void GoButton_Click(object sender, RoutedEventArgs e)

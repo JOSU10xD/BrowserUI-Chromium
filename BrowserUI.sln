@@ -10,6 +10,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserUI", "BrowserUI\Brow
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserUICore", "BrowserUICore\BrowserUICore.csproj", "{3DFBC70F-FC6D-4E0C-A776-41D7B01351F0}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUi3V2Assest", "WinUi3V2Assest\WinUi3V2Assest.csproj", "{D3995985-C299-438C-9FBE-F4E33DA3AB2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -56,6 +58,18 @@ Global
 		{3DFBC70F-FC6D-4E0C-A776-41D7B01351F0}.Release|x86.ActiveCfg = Release|x86
 		{3DFBC70F-FC6D-4E0C-A776-41D7B01351F0}.Release|x86.Build.0 = Release|x86
 		{3DFBC70F-FC6D-4E0C-A776-41D7B01351F0}.Release|x86.Deploy.0 = Release|x86
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Debug|x64.Build.0 = Debug|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Debug|x86.Build.0 = Debug|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Release|ARM64.Build.0 = Release|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Release|x64.ActiveCfg = Release|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Release|x64.Build.0 = Release|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Release|x86.ActiveCfg = Release|Any CPU
+		{D3995985-C299-438C-9FBE-F4E33DA3AB2E}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

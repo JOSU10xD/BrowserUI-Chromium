@@ -29,6 +29,10 @@ using System.ComponentModel;
 using Windows.System;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage.Pickers;
+using Microsoft.Windows.AppLifecycle;
+using System.Diagnostics;
+using System.Threading.Tasks;
+
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -57,7 +61,6 @@ namespace BrowserUI
             appWindow.SetIcon("Assets/browserlogo.ico");
 
         }
-
 
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
@@ -345,3 +348,14 @@ frame.Content is NewTab newTabPage)
     
 
 }
+        
+       
+
+
+
+
+
+
+
+
+

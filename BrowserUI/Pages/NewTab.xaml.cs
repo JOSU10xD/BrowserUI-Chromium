@@ -27,8 +27,8 @@ namespace BrowserUI.Pages
         }
         public void Dispose()
         {
-            WebView?.Close(); 
-            WebView?.CoreWebView2?.Stop(); 
+            WebView?.Close();
+            WebView?.CoreWebView2?.Stop();
             WebView = null;
         }
 

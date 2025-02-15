@@ -8,9 +8,18 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:icons="using:BrowserUI.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
         <controls:WebView2 x:Name="WebView" Grid.Column="2" Margin="0,40,0,0"/>
-    </Grid>
+        </Grid>
+    
+
+    
+            
+   
 </Page>
+                
+
+

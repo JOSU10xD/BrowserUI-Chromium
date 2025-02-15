@@ -46,7 +46,7 @@
                                 <TextBlock Margin="10,0,0,0" Text="New Tab"/>
                             </StackPanel>
                         </Button>
-                        <Button Tag="NewWindow" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" >
+                        <Button Tag="NewWindow"  Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" >
                             <StackPanel Orientation="Horizontal">
                                 <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC6C;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                                 <TextBlock Margin="10,0,0,0" Text="New Window"/>
@@ -153,6 +153,19 @@
                         <ToolTip Content="Refresh" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
+                <AppBarButton  Click="HomeButton_Click"  Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+              FontFamily="Segoe Fluent Icons" 
+                Glyph="&#xE80F;"
+                  FontSize="16" 
+                  Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Home" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
+
             </StackPanel>
             <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
                 <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>
@@ -163,7 +176,7 @@
                 </Button>
             </Grid>
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-               
+
                 <AppBarButton x:Name="Favorite" x:Uid="FavoriteUID" Tag="FavoriteMenu" Margin="0,-5,0,0">
                     <AppBarButton.Icon>
                         <FontIcon
@@ -215,6 +228,7 @@
                 </AppBarButton>
             </StackPanel>
         </Grid>
+
     </Grid>
 
 </Window>

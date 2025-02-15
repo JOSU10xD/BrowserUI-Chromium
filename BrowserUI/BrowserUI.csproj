@@ -48,17 +48,23 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+	 <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
+
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrowserUICore\BrowserUICore.csproj" />
+    <ProjectReference Include="..\WinUi3V2Assest\WinUi3V2Assest.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="SettingsWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Styles\NewFolder\" />
   </ItemGroup>
 
   <!--

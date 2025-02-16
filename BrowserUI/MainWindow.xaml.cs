@@ -29,6 +29,7 @@ using System.ComponentModel;
 using Windows.System;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage.Pickers;
+using BrowserUI.Classes;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -46,7 +47,7 @@ namespace BrowserUI
         public MainWindow()
         {
             this.InitializeComponent();
-            
+            // A new tab format 
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
@@ -54,16 +55,34 @@ namespace BrowserUI
             var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
 
             // Set the icon
-            appWindow.SetIcon("Assets/browserlogo.ico");
+            //appWindow.SetIcon("Assets/browserlogo.ico");
 
         }
 
 
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
-            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
+            var newTab = new TabViewItem();
+            newTab.HeaderTemplate = (DataTemplate)Application.Current.Resources["TabHeaderTemplate"];
+
+            //newTab.IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource() { Symbol = Symbol.Document };
+            //newTab.Header = "New Tab";
+
+            WebView2 webView = new WebView2();
+            webView.Source = new Uri("https://www.google.com");
+            newTab.Content = webView;
+
+           
+            ///icon setting in tab //
+            Tabdetails tabDetails = new Tabdetails();
+            tabDetails.TabHeaderTitle = "Google";
+            tabDetails.SiteUrl = "https://www.google.com";
+            tabDetails.TabHeaderFavicon = $"https://www.google.com/s2/favicons?sz=64&domain={new Uri(tabDetails.SiteUrl).Host}";
+            // Removed \r\n
+            newTab.DataContext = tabDetails;
+            sender.TabItems.Add(newTab);
         }
-        private void Tabs_Add(object sender, RoutedEventArgs args)
+        private void Tabs_Add(  object sender, RoutedEventArgs args)
         {
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
         }
@@ -75,7 +94,25 @@ namespace BrowserUI
                 newTabPage.Dispose(); // Dispose of WebView2 resources
             }
             Tabs.TabItems.Remove(args.Item);
+            if (Tabs.TabItems.Count == 0)
+            {
+                // Close the entire application
+                Environment.Exit(0);
+            //Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
+            }
+
+
+
+
+
+
+
+
+
+
+
         }
+      
 
         private void HomeButton_Click(object sender, RoutedEventArgs e)
         {

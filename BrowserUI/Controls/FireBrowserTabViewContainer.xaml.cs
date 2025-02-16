@@ -53,13 +53,13 @@ namespace BrowserUI.Controls
 
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
-            // Add a new tab
-            var newTab = new FireBrowserTabViewItem
-            {
-                Header = "New Tab",
-                Content = new Frame { SourcePageType = typeof(NewTab) }
-            };
-            TabItems.Add(newTab);
+            //// Add a new tab
+            //var newTab = new FireBrowserTabViewItem
+            //{
+            //    Header = "New Tab",
+            //    Content = new Frame { SourcePageType = typeof(NewTab) }
+            //};
+            //TabItems.Add(newTab);
         }
 
         // Event handler for closing a tab

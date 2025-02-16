@@ -12,8 +12,10 @@
                 <ResourceDictionary Source="Styles/IconSource.xaml"/>
                 <ResourceDictionary Source="Styles/TextBox.xaml"/>
                 <ResourceDictionary Source="Styles/Buttons.xaml"/>
+                <ResourceDictionary Source="Styles/DataTemplates.xaml"/>
                 <!-- Other merged dictionaries here -->
             </ResourceDictionary.MergedDictionaries>
+            
             <!-- Other app resources here -->
         </ResourceDictionary>
     </Application.Resources>

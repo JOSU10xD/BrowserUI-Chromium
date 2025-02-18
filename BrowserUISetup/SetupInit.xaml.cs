@@ -16,26 +16,33 @@ using Windows.Foundation.Collections;
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.
 
-namespace BrowserUI.Controls
+namespace BrowserUISetup
 {
     /// <summary>
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
-    public sealed partial class FireBrowserTabViewItem : TabViewItem
+    public sealed partial class SetupInit : Page
     {
-        public FireBrowserTabViewItem() => InitializeComponent();
-
-        public string Value
+        public SetupInit()
         {
-            get => (string)GetValue(ValueProperty);
-            set => SetValue(ValueProperty, value);
+            this.InitializeComponent();
         }
 
-        public static DependencyProperty ValueProperty = DependencyProperty.Register(
-        nameof(Value),
-        typeof(string),
-        typeof(FireBrowserTabViewItem),
-        null);
+        private string _introMessage = @"
+• Seamless browsing experience.
+
+• One-click access to favorite websites and a built-in favorites organizer.
+
+• Immersive full-screen mode.
+
+• Prioritizes user convenience.
+
+• Caters to users seeking a user-friendly web browser with advanced features.
+";
+
+        private void Setup_Click(object sender, RoutedEventArgs e)
+        {
+            Frame.Navigate(typeof(SetupUser));
+        }
     }
 }
-

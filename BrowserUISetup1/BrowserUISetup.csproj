@@ -1,0 +1,57 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+    <RootNamespace>BrowserUISetup</RootNamespace>
+    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
+    <UseWinUI>true</UseWinUI>
+	  <Platforms>AnyCPU;x64</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <Page Remove="SetupAccess.xaml" />
+    <Page Remove="SetupFinish.xaml" />
+    <Page Remove="SetupGenaral.xaml" />
+    <Page Remove="SetupInit.xaml" />
+    <Page Remove="SetupPrivacy.xaml" />
+    <Page Remove="SetupUi.xaml" />
+    <Page Remove="SetupUser.xaml" />
+    <Page Remove="SetupWebView.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.MetadataControl" Version="8.1.240916" />
+    <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
+    <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BrowserUIAsset\BrowserUIAsset.csproj" />
+    <ProjectReference Include="..\BrowserUIMultiCore\BrowserUIMultiCore.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="SetupAccess.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupFinish.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupGenaral.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupInit.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupPrivacy.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupUi.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupUser.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+    <None Update="SetupWebView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </None>
+  </ItemGroup>
+  
+</Project>

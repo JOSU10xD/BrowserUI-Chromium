@@ -16,78 +16,238 @@
     </Window.SystemBackdrop>
 
     <Window.Title>
-        BrowserUI
+       GRID
     </Window.Title>
-    
 
-    <Grid>
-
-        <!--flyout-->
+    <Grid Background="Transparent">
+        <!-- flyouts -->
         <Grid.Resources>
-            <Flyout x:Name="Moreflyout">
+            <Flyout x:Name="MoreFlyout">
                 <StackPanel Width="250">
                     <StackPanel Name="menuHeader">
                         <Button IsEnabled="True" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" BorderBrush="Transparent" Background="Transparent" Margin="0,0,0,10">
                             <StackPanel Orientation="Horizontal">
-                                <!--SETTINGS THE CONTENT OF MAIN USER BUTTON-->
-                                <PersonPicture Width="45" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <!-- settings the content of main user button-->
+                                <PersonPicture Width="45"/>
                                 <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock x:Name="username" Text="Albin" Style="{ThemeResource SubtitleTextBlockStyle}" FontSize="15"/>
-                                    <TextBlock Text="local Account" FontSize="12"/>
+                                    <TextBlock x:Name="Username" Text="Placeholder" Style="{ThemeResource SubtitleTextBlockStyle}" FontSize="15"/>
+                                    <TextBlock Text="Local Account" FontSize="12"/>
                                 </StackPanel>
                             </StackPanel>
                         </Button>
-                        <!--These will separate the content"-->
-                        <Border BorderBrush="{ThemeResource ApplicationHeaderForegroundThemeBrush}" Opacity="0.3" Margin="10,5,10,10" BorderThickness="1"/>
+                        <!-- these will separate the content -->
+                        <Border BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}" Opacity="0.3" Margin="10,5,10,10" BorderThickness="1"/>
+                        <!-- new tab & new window & new private buttons-->
+                        <Button Tag="NewTab" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC6C;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="New-Tab"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="NewWindow" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE737;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="New-Window"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="NewPrivate" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE727;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="New-Private"/>
+                            </StackPanel>
+                        </Button>
 
-                        <Button Tag="NewTab" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True" Click="Tabs_Add">
+                        <Border BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}" Opacity="0.3" Margin="10,5,10,10" BorderThickness="1"/>
+                        <!-- Pages - History - Downloads - Favorites -->
+                        <Button Tag="History" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE710;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                                <TextBlock Margin="10,0,0,0" Text="New Tab"/>
-                            </StackPanel>
-                        </Button>
-                        <Button Tag="NewWindow" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" >
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC6C;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                                <TextBlock Margin="10,0,0,0" Text="New Window"/>
-                            </StackPanel>
-                        </Button>
-                        <Button Tag="NewPrivate" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True"   >
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}"    Glyph="&#xE90F;"  FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                                <TextBlock Margin="10,0,0,0" Text="New private Window"/>
-                            </StackPanel>
-                        </Button>
-                        <Border BorderBrush="{ThemeResource ApplicationHeaderForegroundThemeBrush}" Opacity="0.3" Margin="10,10,10,10" BorderThickness="1"/>
-                        <Button Tag="History" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE81c;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE81C;" FontSize="18"/>
                                 <TextBlock Margin="10,0,0,0" Text="History"/>
                             </StackPanel>
                         </Button>
-                        <Button Tag="Downloads" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" >
+                        <Button Tag="Downloads" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE896;" FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE896;" FontSize="18"/>
                                 <TextBlock Margin="10,0,0,0" Text="Downloads"/>
                             </StackPanel>
                         </Button>
-                        <Button Tag="Bookmarks" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True"   >
+                        <Button Tag="Favorites" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
                             <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}"    Glyph="&#xE728;"  FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                                <TextBlock Margin="10,0,0,0" Text="Bookmarks"/>
-                            </StackPanel>
-                        </Button>
-                        <Button Tag="settings" Background="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,10,0,0" IsEnabled="True" Click="SettingsButton_Click" >
-                            <StackPanel Orientation="Horizontal">
-                                <FontIcon FontFamily="{StaticResource FluentIcons}"    Glyph="&#xE713;"  FontSize="18" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                                <TextBlock Margin="10,0,0,0" Text="Settings"/>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE728;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="Favorites"/>
                             </StackPanel>
                         </Button>
 
+                        <Border BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}" Opacity="0.3" Margin="10,5,10,10" BorderThickness="1"/>
+                        <!-- Tools -->
+                        <Button Tag="Print" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE749;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="Print"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="FullScreen" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE740;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="Full Screen"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="Share" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE72D;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="Share"/>
+                            </StackPanel>
+                        </Button>
+
+                        <Border BorderBrush="{ThemeResource ApplicationForegroundThemeBrush}" Opacity="0.3" Margin="10,5,10,10" BorderThickness="1"/>
+                        <!-- Overige -->
+                        <Button Tag="DevTools" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC7A;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="Dev Tools"/>
+                            </StackPanel>
+                        </Button>
+                        <Button Tag="Settings" Background="Transparent" BorderBrush="Transparent" HorizontalAlignment="Stretch" HorizontalContentAlignment="Left" Margin="0,0,0,0" IsEnabled="True">
+                            <StackPanel Orientation="Horizontal">
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE713;" FontSize="18"/>
+                                <TextBlock Margin="10,0,0,0" Text="Settings"/>
+                            </StackPanel>
+                        </Button>
                     </StackPanel>
                 </StackPanel>
             </Flyout>
+            <!-- History Flyout -->
+            <Flyout x:Name="HistoryFly" Placement="Bottom">
+                <MenuFlyoutItem x:Name="HistoryMenuItem" Text="History">
+                    <MenuFlyoutItem.Icon>
+                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE81C;" />
+                    </MenuFlyoutItem.Icon>
+                    <MenuFlyoutItem.ContextFlyout>
+                        <Flyout x:Name="HistoryFlyoutMenu" x:FieldModifier="Public"  Placement="Bottom">
+                            <Grid Width="300" Height="500" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="35" />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition Width="80" />
+                                </Grid.ColumnDefinitions>
+                                <!-- Buttons-->
+                                <TextBlock  x:Name="HistorySmallTitle" Margin="10,0"   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Text="History"/>
+                                <TextBox x:Name="HistorySearchMenuItem" Height="35" Visibility="Collapsed" />
+
+                                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
+                                    <Button  x:Name="SearchHistoryMenuFlyout" Width="32" Height="32"  Margin="0,0,10,0" Padding="0" Background="Transparent"  BorderThickness="0">
+                                        <Viewbox Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                            <SymbolIcon Symbol="Find" />
+                                        </Viewbox>
+                                    </Button>
+                                    <Button x:Name="MenuHistoryMenuFlyout" Width="32" Height="32" Padding="0" Background="Transparent" BorderThickness="0">
+                                        <Button.Flyout>
+                                            <MenuFlyout Placement="Bottom">
+                                                <MenuFlyoutItem x:Name="ClearHistoryDataMenuItem" Tag="ClearAll"  Text="Clear History Data" >
+                                                    <MenuFlyoutItem.Icon>
+                                                        <SymbolIcon Symbol="Clear" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                                <MenuFlyoutItem x:Name="OpenHistoryMenuItem" Text="Open History Page" >
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE8A7;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </Button.Flyout>
+                                        <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                            <SymbolIcon Symbol="More" />
+                                        </Viewbox>
+                                    </Button>
+                                </StackPanel>
+                                <ListView x:Name="HistoryTemp"  Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanReorderItems="True" CanDragItems="True">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid Margin="5" >
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                </Grid.ColumnDefinitions>
+                                                <Image Grid.Column="0" Width="32" Height="32" Source="{Binding ImageSource}" />
+                                                <StackPanel Grid.Column="1">
+                                                    <TextBlock Text="{Binding Title}" FontWeight="Bold" Margin="5,0,0,0" />
+                                                    <TextBlock Text="{Binding Url}" Margin="5,0,0,0" />
+                                                </StackPanel>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Flyout>
+                    </MenuFlyoutItem.ContextFlyout>
+                </MenuFlyoutItem>
+            </Flyout>
+
+            <!-- Favorites Flyout -->
+            <Flyout x:Name="FavsFlyouts">
+                <Grid Width="300" Height="400">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock x:Name="TitleFavorites" Margin="10,0" FontSize="16" FontWeight="Bold" Text="Favorites"/>
+                    <Button Grid.Column="1" Width="32" Height="32" Padding="0" BorderThickness="0" Style="{ThemeResource QuietButtonStyle}">
+                        <Button.Flyout>
+                            <MenuFlyout Placement="Bottom">
+                                <MenuFlyoutItem x:Name="OpenFavoritesMenu" Text="Open Favorites Page">
+                                    <MenuFlyoutItem.Icon>
+                                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE8A7;"/>
+                                    </MenuFlyoutItem.Icon>
+                                </MenuFlyoutItem>
+                            </MenuFlyout>
+                        </Button.Flyout>
+                        <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <SymbolIcon Symbol="More"/>
+                        </Viewbox>
+                    </Button>
+                    <!-- here the items life-->
+                    <ListView x:Name="FavsListView" Margin="0,7,0,0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock FontSize="20" Text="Place Holder" ToolTipService.ToolTip="Place Holder Url"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Flyout>
+            <!-- Qr Flyout -->
+            <Flyout x:Name="QrFlyout" Placement="Bottom">
+                <StackPanel CornerRadius="{StaticResource ControlCornerRadius}">
+                    <!-- Title -->
+                    <TextBlock Style="{StaticResource BaseTextBlockStyle}" Text="Qr Code Genarator"/>
+                    <!-- Qr Code-->
+                    <Image x:Name="QrImage" Width="160" Height="160" Margin="0,5,0,0"/>
+                    <!--Buttons -->
+                    <Grid>
+                        <Button HorizontalAlignment="Left" Content="{icons:FluentIcon Glyph=&#xE946;}" Style="{ThemeResource QuietButtonStyle}">
+                            <Button.Flyout>
+                                <Flyout Placement="Bottom">
+                                    <TextBlock TextWrapping="Wrap" TextLineBounds="Full" MaxLines="50" LineStackingStrategy="MaxHeight">
+                                        Use Camera Or Special App To Scan The Qr Code
+                                    </TextBlock>
+                                </Flyout>
+                            </Button.Flyout>
+                        </Button>
+                        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" Spacing="4">
+                            <Button Content="Save" Margin="0,5,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </StackPanel>
+            </Flyout>
         </Grid.Resources>
+
 
         <floatingtabs:FireBrowserTabViewContainer x:Name="Tabs"
       Visibility="Visible"
@@ -97,8 +257,6 @@
       Mode="Modern"
       Grid.Row="0"
      Loaded="Tabs_Loaded"
-     AddTabButtonClick="Tabs_AddTabButtonClick"
-     TabCloseRequested="Tabs_TabCloseRequested"
       >
             <floatingtabs:FireBrowserTabViewContainer.TabStripHeader>
                 <Image Source="Assets/browserlogo.ico" Width="32" Height="32" Margin="5,0,0,0" />
@@ -108,86 +266,64 @@
             </floatingtabs:FireBrowserTabViewContainer.TabStripFooter>
         </floatingtabs:FireBrowserTabViewContainer>
 
-        <Grid x:Name="TopBar" Height="37" x:FieldModifier="Public" Margin="0,40,0,0" VerticalAlignment="Top" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid x:Name="ClassicToolBar" Height="37" x:FieldModifier="Public" Margin="0,40,0,0" VerticalAlignment="Top" Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+            <!-- colums-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Top Bar -->
-            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
-                <AppBarButton Click="BackButton_Click"  Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon 
-                        FontFamily="Segoe Fluent Icons" 
-                        Glyph="&#xE72B;" 
-                        FontSize="15"
-                        Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Back" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
-                <AppBarButton  Click="ForwardButton_Click" Margin="0, -5, 0, 0">
-                    <AppBarButton.Icon>
-                        <FontIcon 
-                                FontFamily="Segoe Fluent Icons" 
-                                Glyph="&#xE72A;" 
-                                FontSize="16" 
-                                Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Forward" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
-                <AppBarButton  Click="RefreshButton_Click" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon 
-                             FontFamily="Segoe Fluent Icons" 
-                                 Glyph="&#xE72C;" 
-                                 FontSize="16" 
-                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Refresh" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
-                <AppBarButton  x:Name="HomeButton" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon 
-                             FontFamily="Segoe Fluent Icons" 
-                                 Glyph="&#xe80f;" 
-                                 FontSize="16" 
-                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Home" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
+            <!-- BUTTONS -->
+            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
+                <!--back button -->
+                <Button x:Name="BackBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}"/>
+                <!--forward button -->
+                <Button x:Name="ForwardBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72A;}"/>
+                <!--refresh button -->
+                <Button x:Name="RefreshBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72C;}"/>
+                <!--home button -->
+                <Button x:Name="HomeBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>
             </StackPanel>
+
+            <!-- URL BOX-->
             <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
-                <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>
-                <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public" HorizontalAlignment="Left" Click="GoButton_Click">
-                    <Button.Content>
-                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
-                    </Button.Content>
+                <!-- the box to search-->
+                <AutoSuggestBox Padding="32,5,5,0" x:Name="UrlBox" x:Uid="SearchBar" x:FieldModifier="Public" CornerRadius="5" Style="{StaticResource PortalBarStyle}"/>
+                <!-- the lock icon-->
+                <Button x:Name="SecureLock" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public">
+                    <FontIcon d:Glyph="&#xE72E;" FontFamily="{StaticResource FluentIcons}"/>
                 </Button>
             </Grid>
+
+            <!-- right site buttons -->
             <StackPanel Grid.Column="2" Orientation="Horizontal">
-                <AppBarButton x:Name="Addfav" Tag="AddFavourFlyout" Visibility="Visible" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon 
-            FontFamily="Segoe Fluent Icons" 
-            Glyph="&#xE734;"
-            FontSize="16" 
-            Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Add Favorites" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                    <AppBarButton.Flyout>
-                        <Flyout Placement="Bottom" AllowFocusOnInteraction="True" >
+                <!-- tool menu buttons -->
+                <Button x:Name="ToolBoxMore" Style="{ThemeResource QuietButtonStyle}" Content="{icons:FluentIcon Glyph=&#xE70F;}">
+                    <Button.Flyout>
+                        <Flyout Placement="Bottom">
+                            <StackPanel Orientation="Horizontal">
+                                <!-- you can add more buttons if wanted -->
+                                <Button Style="{StaticResource QuietButtonStyle}" x:Name="AdBlock" Tag="AdBlock" Width="32" ToolTipService.ToolTip="AdBlock">
+                                    <Button.Content>
+                                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEA18;"/>
+                                    </Button.Content>
+                                </Button>
+                                <Button Style="{StaticResource QuietButtonStyle}" x:Name="Translate" Tag="Translate" Width="32" ToolTipService.ToolTip="Translate">
+                                    <Button.Content>
+                                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE87E;"/>
+                                    </Button.Content>
+                                </Button>
+                            </StackPanel>
+                        </Flyout>
+                    </Button.Flyout>
+                </Button>
+
+                <!-- favorites Button-->
+                <Button x:Name="AddFav" Style="{ThemeResource QuietButtonStyle}" Tag="AddFavoriteFlyout" Visibility="Visible" Content="{icons:FluentIcon Glyph=&#xE734;}">
+                    <!-- flyout menu-->
+                    <Button.Flyout>
+                        <Flyout >
                             <Grid MaxWidth="325">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
@@ -197,83 +333,34 @@
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" MinWidth="300" FontSize="20" Text="Add Favorite"/>
-                                <TextBlock Grid.Row="1" Text="Name" Margin="5"/>
-                                <TextBox Grid.Row="2" x:Name="Name" />
-                                <TextBlock Grid.Row="3" Text="URL" Margin="5"/>
-                                <TextBox Grid.Row="4" x:Name="FaveTitle"/>
-                                <StackPanel Grid.Row="6" Orientation="Horizontal" HorizontalAlignment="Right">
-                                    <Button  Width="Auto" Tag="AddFav" Margin="10" Content="ADD" Padding="15"/>
-                                </StackPanel>
+                                <!-- the content-->
+
+                                <!-- title -->
+                                <TextBlock Grid.Row="0" MinWidth="300" FontSize="20"  Text="Add Favorite"/>
+
+                                <!-- content Title -->
+                                <TextBlock Grid.Row="1" Text="Title"/>
+                                <TextBox Grid.Row="2" x:Name="FavoritesTitle"/>
+
+                                <!-- content Title -->
+                                <TextBlock Grid.Row="3" Text="Url"/>
+                                <TextBox Grid.Row="4" x:Name="FavoritesUrl"/>
+
+                                <!-- add button -->
+                                <Button Grid.Row="5" Width="Auto" Tag="AddFavorite" Margin="0,0,0,0" Content="Add Favorite"/>
                             </Grid>
                         </Flyout>
-                    </AppBarButton.Flyout>
-                </AppBarButton>
-                <AppBarButton x:Name="Bookmarks" Click="Bookmarks_Click" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon x:Name="BookmarkIcon"
-                  FontFamily="Segoe Fluent Icons" 
-                  Glyph="&#xE7C3;" 
-                  FontSize="16" 
-                  Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Favorites" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
+                    </Button.Flyout>
+                </Button>
 
+                <!-- overige buttons -->
+                <Button x:Name="FavoritesListMenu" Flyout="{StaticResource FavsFlyouts}"  x:Uid="FavoritesListUID" Tag="FavoritesMenu" Content="{icons:FluentIcon Glyph=&#xE728;}" Style="{StaticResource QuietButtonStyle}"/>
+                <Button x:Name="DownloadBtn" x:Uid="DownloadUID" Tag="DownloadsMenu" Content="{icons:FluentIcon Glyph=&#xE896;}" Style="{StaticResource QuietButtonStyle}"/>
+                <Button x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Content="{icons:FluentIcon Glyph=&#xE81C;}" Style="{StaticResource QuietButtonStyle}"/>
+                <Button x:Name="QrBtn" Flyout="{StaticResource QrFlyout}" x:Uid="QrUID" Tag="QrMenu" Content="{icons:FluentIcon Glyph=&#xED14;}" Style="{StaticResource QuietButtonStyle}"/>
+                <Button x:Name="MoreBtn" Flyout="{StaticResource MoreFlyout}" x:Uid="MoreUID" Tag="MoreMenu" Content="{icons:FluentIcon Glyph=&#xE712;}" Style="{StaticResource QuietButtonStyle}"/>
 
-                <AppBarButton x:Name="ClipBoard" Tag="Clipboard" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon
-                 FontFamily="Segoe Fluent Icons" 
-                 Glyph="&#xf0e3;" 
-                 FontSize="16" 
-                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="ClipBoard" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
-                <AppBarButton x:Name="downloads" x:Uid="downloadsUID" Tag="downloadsMenu" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon
-                             FontFamily="Segoe Fluent Icons" 
-                             Glyph="&#xE896;" 
-                             FontSize="16" 
-                             Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
-                <AppBarButton x:Name="Screenshot" x:Uid="BarcodeUID" Tag="BarcodeMenu" Click="ScreenshotButton_Click" Margin="0,-5,0,0">
-                    <AppBarButton.Icon>
-                        <FontIcon
-              FontFamily="Segoe Fluent Icons" 
-                   Glyph="&#xE722;" 
-                 FontSize="16" 
-                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="Screenshot" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
-
-                <AppBarButton x:Name="MenuMore" x:Uid="MenuMoreUID" Tag="MoreMenu" Flyout="{StaticResource Moreflyout}" VerticalAlignment="Stretch" Margin="0,-5,0,0" >
-                    <AppBarButton.Icon >
-                        <FontIcon 
-                              FontFamily="Segoe Fluent Icons" 
-                              Glyph="&#xE712;"
-                              FontSize="16" 
-                              Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
-                    </AppBarButton.Icon>
-                    <ToolTipService.ToolTip>
-                        <ToolTip Content="More" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
-                    </ToolTipService.ToolTip>
-                </AppBarButton>
             </StackPanel>
         </Grid>
     </Grid>
-
 </Window>

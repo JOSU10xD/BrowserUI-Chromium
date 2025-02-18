@@ -8,9 +8,94 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    xmlns:icons="using:BrowserUI.Controls"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    xmlns:dllimg="using:BrowserUIAsset">
 
-    <Grid>
-        <controls:WebView2 x:Name="WebView" Grid.Column="2" Margin="0,40,0,0"/>
+    <Grid x:Name="BackGroundGrid">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640"/>
+                    </VisualState.StateTriggers>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <Button x:Name="TabEditBtn" Style="{ThemeResource QuietButtonStyle}" Padding="6" Margin="0,31,64,0" VerticalAlignment="Top" HorizontalAlignment="Right" Content="{icons:FluentIcon Glyph=&#xE70F;}">
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <StackPanel>
+                        <ToggleSwitch x:Name="Type">
+                            Enable Auto Fill TextBox
+                        </ToggleSwitch>
+                        <ToggleSwitch x:Name="Mode">
+                            Enable Light Mode
+                        </ToggleSwitch>
+                        <ToggleSwitch x:Name="DataTime">
+                            Enable Ntp
+                        </ToggleSwitch>
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+        <!-- new Tab Settings Btn-->
+        <Button x:Uid="NewTabSettingsButton" Style="{ThemeResource QuietButtonStyle}" Padding="6" Margin="0,31,32,0" VerticalAlignment="Top" HorizontalAlignment="Right" Content="{icons:FluentIcon Glyph=&#xE713;}">
+            <Button.Flyout>
+                <Flyout Placement="Bottom">
+                    <StackPanel Background="Transparent">
+                        <!-- fixing later part -->
+                        <GridView x:Name="GridSelect" Background="{ThemeResource SystemControlBackgroundTransparentRevealBorderBrush}">
+                            <GridViewItem x:Name="NoneGrid" Padding="12" Tag="None" x:FieldModifier="Public">
+                                <StackPanel>
+                                    <Image Width="100" Source="{dllimg:ImageLoader ImageName=BackgroundNone.png}"/>
+                                    <TextBlock x:Uid="NewTabBackgroundNone" HorizontalAlignment="Center" Margin="0,0,0,0">None</TextBlock>
+                                </StackPanel>
+                            </GridViewItem>
+                            <GridViewItem x:Name="FsGrid" Padding="12" Tag="None" x:FieldModifier="Public">
+                                <StackPanel>
+                                    <Image Width="100" Source="{dllimg:ImageLoader ImageName=BackgroundBing.png}"/>
+                                    <TextBlock x:Uid="NewTabBackgroundNone" HorizontalAlignment="Center" Margin="0,0,0,0">Bing Image</TextBlock>
+                                </StackPanel>
+                            </GridViewItem>
+                            <GridViewItem x:Name="CsGrid" Padding="12" Tag="None" x:FieldModifier="Public">
+                                <StackPanel>
+                                    <Image Width="100" Source="{dllimg:ImageLoader ImageName=BackgroundCostum.png}"/>
+                                    <TextBlock x:Uid="NewTabBackgroundNone" HorizontalAlignment="Center" Margin="0,0,0,0">Costum</TextBlock>
+                                </StackPanel>
+                            </GridViewItem>
+                        </GridView>
+                        <!-- Textbox color in # value -->
+                        <TextBlock FontWeight="Bold" Text="New-Tab Background Color ( Re-Open Tab )"/>
+                        <TextBox x:FieldModifier="Public" Margin="0,5,0,0" x:Name="TextColor"/>
+                    </StackPanel>
+                </Flyout>
+            </Button.Flyout>
+        </Button>
+
+        <!-- Ntp Time Grid-->
+        <Grid x:Name="NtpGrid" HorizontalAlignment="Center" VerticalAlignment="Top" RowSpacing="3" Margin="0,75,0,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <TextBlock x:Name="NtpTime" Grid.Row="0" FontWeight="Medium" TextAlignment="Center" FontSize="68">Time</TextBlock>
+            <TextBlock x:Name="NtpDate" Grid.Row="1">Date</TextBlock>
+        </Grid>
+
+        <!-- search box grid -->
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RowSpacing="4" x:Name="BigGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <AutoSuggestBox x:Name="NewTabSearch" x:Uid="SearchBar" PlaceholderText="Search Here" Grid.Row="0" MinWidth="250" BorderThickness="1,1,1,1" CornerRadius="5" BorderBrush="{ThemeResource SystemAltHighColor}" Background="Transparent" Width="Auto" x:FieldModifier="Public">
+                <AutoSuggestBox.Resources>
+                    <SolidColorBrush x:Key="TextControlPlaceholderForeground" Color="{ThemeResource SystemAltHighColor}"/>
+                    <SolidColorBrush x:Key="TextControlButtonForeground" Color="{ThemeResource SystemAltHighColor}"/>
+                </AutoSuggestBox.Resources>
+            </AutoSuggestBox>
+        </Grid>
     </Grid>
 </Page>
+

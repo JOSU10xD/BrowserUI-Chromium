@@ -43,164 +43,12 @@ namespace BrowserUI
     {
         private Microsoft.UI.Windowing.AppWindow appWindow;
         private Microsoft.UI.Windowing.AppWindowTitleBar titleBar;
-        private bool isBookmarked = false;
         public MainWindow()
         {
             this.InitializeComponent();
-            
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
-            var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
-            var windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
-            var appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-
-
         }
-
-       // private void ClipBoardclick(object sender, RoutedEventArgs e)
-       // {
-       //     if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-       //         selectedTab.Content is Frame frame &&
-       //         frame.Content is ClipBoard cl)
-       //     {
-       //         cl.WriteStringToClipboard(s);
-       //    }
-       // } 
-        private void Tabs_AddTabButtonClick(TabView sender, object args)
-        {
-            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
-        }
-        private void Tabs_Add(object sender, RoutedEventArgs args)
-        {
-            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
-        }
-
-        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
-        {
-            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
-            {
-                newTabPage.Dispose(); // Dispose of WebView2 resources
-            }
-            Tabs.TabItems.Remove(args.Item);
-        }
-
-        private void HomeButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-                selectedTab.Content is Frame frame &&
-                frame.Content is NewTab newTabPage)
-            {
-                newTabPage.GoHome();
-            }
-        }
-
-        #region Topbar
-
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-    selectedTab.Content is Frame frame &&
-    frame.Content is NewTab newTabPage)
-            {
-                newTabPage.BackButton_Click(sender, e);
-            }
-
-        }
-
-        private void ForwardButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-selectedTab.Content is Frame frame &&
-frame.Content is NewTab newTabPage)
-            {
-                newTabPage.ForwardButton_Click(sender, e);
-            }
-        }
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-selectedTab.Content is Frame frame &&
-frame.Content is NewTab newTabPage)
-            {
-                newTabPage.RefreshButton_Click(sender, e);
-            }
-        }
-        private void Bookmarks_Click(object sender, RoutedEventArgs e)
-        {
-            isBookmarked = !isBookmarked; // Toggle bookmark state
-
-            if (isBookmarked)
-            {
-                BookmarkIcon.Glyph = "\uE735"; // Change to filled bookmark icon
-            }
-            else
-            {
-                BookmarkIcon.Glyph = "\uE7C3"; // Change to unfilled bookmark icon
-            }
-        }
-        private void GoButton_Click(object sender, RoutedEventArgs e)
-        {
-            string input = UrlBox.Text;
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-                selectedTab.Content is Frame frame &&
-                frame.Content is NewTab newTabPage)
-            {
-                newTabPage.GoButton_Click(sender, e, input);
-            }
-        }
-        private void UrlBox_Loaded(object sender, RoutedEventArgs e)
-        {
-            if (UrlBox.FindName("PART_EditableTextBox") is TextBox textBox)
-            {
-                textBox.TextChanged += UrlBox_TextChanged;
-            }
-        }
-        private async void UrlBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            string query = UrlBox.Text;
-
-            if (!string.IsNullOrWhiteSpace(query))
-            {
-                try
-                {
-                    using HttpClient client = new();
-                    string url = $"https://suggestqueries.google.com/complete/search?client=firefox&q={Uri.EscapeDataString(query)}";
-                    var response = await client.GetStringAsync(url);
-
-                    // Parse JSON response
-                    var suggestions = JsonSerializer.Deserialize<List<object>>(response);
-                    if (suggestions != null && suggestions.Count > 1 && suggestions[1] is JsonElement suggestionArray)
-                    {
-                        var searchSuggestions = suggestionArray.EnumerateArray().Select(x => x.GetString()).Where(x => x != null).ToList();
-                        UrlBox.ItemsSource = new ObservableCollection<string>(searchSuggestions);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    // Handle errors (e.g., network issues)
-                    Console.WriteLine($"Error fetching suggestions: {ex.Message}");
-                }
-            }
-        }
-
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            SettingsWindow settingsWindow = new SettingsWindow();
-            settingsWindow.Activate();
-        }
-
-        private async void ScreenshotButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-selectedTab.Content is Frame frame &&
-frame.Content is NewTab newTabPage)
-            {
-                newTabPage.CaptureScreenshot(sender, e);
-            }
-        }
-
-
-        #endregion
 
         #region TitleBar
 
@@ -209,7 +57,7 @@ frame.Content is NewTab newTabPage)
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             Microsoft.UI.WindowId windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-            appWindow.SetIcon("brwlog.ico");
+            appWindow.SetIcon("Logo.ico");
 
 
             if (!Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported())
@@ -319,7 +167,7 @@ frame.Content is NewTab newTabPage)
 
             var newItem = new FireBrowserTabViewItem
             {
-                Header = "BrowserUI - HomePage",
+                Header = "GRID - HomePage",
                 IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource { Symbol = Symbol.Home },
                 Style = (Style)Microsoft.UI.Xaml.Application.Current.Resources["FloatingTabViewItemStyle"]
             };
@@ -332,12 +180,12 @@ frame.Content is NewTab newTabPage)
                 Param = param,
             };
 
-
+            double margin = ClassicToolBar.Height;
             var frame = new Frame
             {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
-                Margin = new Thickness(0, 0, 0, 0)
+                Margin = new Thickness(0, margin, 0, 0)
             };
 
             if (page != null)
@@ -362,6 +210,4 @@ frame.Content is NewTab newTabPage)
 
         #endregion
     }
-    
-
 }

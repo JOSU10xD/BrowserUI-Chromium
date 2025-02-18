@@ -1,26 +1,32 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>BrowserUI</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x86;x64;ARM64</Platforms>
-    <RuntimeIdentifiers>win-x86;win-x64;win-arm64</RuntimeIdentifiers>
-    <PublishProfile>win-$(Platform).pubxml</PublishProfile>
-    <UseWinUI>true</UseWinUI>
-    <EnableMsixTooling>true</EnableMsixTooling>
-    <Nullable>enable</Nullable>
-  </PropertyGroup>
+	<PropertyGroup>
+		<LangVersion>latest</LangVersion>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows10.0.22621.0</TargetFramework>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<RootNamespace>BrowserUI</RootNamespace>
+		<ApplicationManifest>app.manifest</ApplicationManifest>
+		<Platforms>x86;x64;ARM64</Platforms>
+		<RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
+		<PublishProfile>win10-$(Platform).pubxml</PublishProfile>
+		<UseWinUI>true</UseWinUI>
+		<EnableMsixTooling>true</EnableMsixTooling>
+	</PropertyGroup>
   <ItemGroup>
     <Content Remove="Assets\brw1.png" />
     <Content Remove="Assets\brw2.png" />
     <Content Remove="Assets\edge_browser_logo_icon_152998.ico" />
     <Content Remove="Assets\Segoe Fluent Icons.ttf" />
   </ItemGroup>
-  <ItemGroup>
-    <None Remove="SettingsWindow.xaml" />
-  </ItemGroup>
+    <ItemGroup>
+		<None Remove="Controls\FireBrowserTabViewContainer.xaml" />
+		<None Remove="Controls\FireBrowserTabViewItem.xaml" />
+		<None Remove="SetupWindow.xaml" />
+		<None Remove="Styles\Buttons.xaml" />
+		<None Remove="Styles\IconSource.xaml" />
+		<None Remove="Styles\TabView.xaml" />
+		<None Remove="Styles\TextBox.xaml" />
+	</ItemGroup>
 
   <ItemGroup>
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -48,15 +54,18 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
-    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.2903.40" />
+    <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
-    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.241114003" />
+    <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BrowserUIAsset\BrowserUIAsset.csproj" />
     <ProjectReference Include="..\BrowserUICore\BrowserUICore.csproj" />
+    <ProjectReference Include="..\BrowserUIMultiCore\BrowserUIMultiCore.csproj" />
+    <ProjectReference Include="..\BrowserUISetup\BrowserUISetup.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Page Update="SettingsWindow.xaml">
+    <Page Update="SetupWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>

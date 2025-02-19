@@ -12,7 +12,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:dllimg="using:BrowserUIAsset">
 
-    <Grid x:Name="BackGroundGrid">
+    <Grid x:Name="BackGroundGrid" >
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState>

@@ -1,4 +1,4 @@
-﻿namespace FireBrowserCore.Models;
+﻿namespace BrowserUICore.Models;
 public class ImageTab
 {
     public string url { get; set; }

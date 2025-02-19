@@ -50,6 +50,27 @@ namespace BrowserUI.Controls
         typeof(Settings.UILayout),
         typeof(FireBrowserTabViewContainer),
         null);
+
+        private void Tabs_AddTabButtonClick(TabView sender, object args)
+        {
+            var newTab = new FireBrowserTabViewItem
+            {
+                Header = "New Tab",
+                Content = new Frame
+                {
+                    Margin = new Thickness(0, 35, 0, 0) // Ensures new tabs respect the top margin
+                }
+            };
+
+            ((Frame)newTab.Content).Navigate(typeof(NewTab));
+
+            TabItems.Add(newTab);
+            sender.SelectedItem = newTab;
+        }
+
+
+        // Event handler for closing a tab
+
     }
 }
 

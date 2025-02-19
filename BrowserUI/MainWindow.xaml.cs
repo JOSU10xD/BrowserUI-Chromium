@@ -50,6 +50,35 @@ namespace BrowserUI
             TitleTop();
         }
 
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+    selectedTab.Content is Frame frame &&
+    frame.Content is NewTab newTabPage)
+            {
+                newTabPage.BackButton_Click(sender, e);
+            }
+
+        }
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.ForwardButton_Click(sender, e);
+            }
+        }
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.RefreshButton_Click(sender, e);
+            }
+        }
+
         #region TitleBar
 
         public void TitleTop()

@@ -9,19 +9,12 @@
     mc:Ignorable="d"
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"
     xmlns:icons="using:BrowserUI.Controls"
+    xmlns:wv2="using:Microsoft.UI.Xaml.Controls"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     xmlns:dllimg="using:BrowserUIAsset">
 
-    <Grid x:Name="BackGroundGrid" >
-        <VisualStateManager.VisualStateGroups>
-            <VisualStateGroup>
-                <VisualState>
-                    <VisualState.StateTriggers>
-                        <AdaptiveTrigger MinWindowWidth="640"/>
-                    </VisualState.StateTriggers>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+    <Grid x:Name="BackGroundGrid">
+        <wv2:WebView2 x:Name="BrowserView" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Margin="0,0,0,0"/>
         <Button x:Name="TabEditBtn" Style="{ThemeResource QuietButtonStyle}" Padding="6" Margin="0,31,64,0" VerticalAlignment="Top" HorizontalAlignment="Right" Content="{icons:FluentIcon Glyph=&#xE70F;}">
             <Button.Flyout>
                 <Flyout Placement="Bottom">

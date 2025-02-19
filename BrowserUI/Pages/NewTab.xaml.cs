@@ -24,6 +24,7 @@ using Microsoft.UI;
 using Windows.Services.Store;
 using System.Net.Http;
 using System.ComponentModel.DataAnnotations;
+using FireBrowserCore.Models;
 
 
 namespace BrowserUI.Pages

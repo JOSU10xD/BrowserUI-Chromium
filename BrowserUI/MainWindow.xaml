@@ -187,6 +187,9 @@
             </Flyout>
 
             <!-- Favorites Flyout -->
+
+
+
             <Flyout x:Name="FavsFlyouts">
                 <Grid Width="300" Height="400">
                     <Grid.RowDefinitions>
@@ -198,21 +201,30 @@
                         <ColumnDefinition Width="Auto"/>
                     </Grid.ColumnDefinitions>
                     <TextBlock x:Name="TitleFavorites" Margin="10,0" FontSize="16" FontWeight="Bold" Text="Favorites"/>
-                    <Button Grid.Column="1" Width="32" Height="32" Padding="0" BorderThickness="0" Style="{ThemeResource QuietButtonStyle}">
-                        <Button.Flyout>
+
+                    <AppBarButton  Grid.Column="1" Width="32" Height="32" Padding="0" BorderThickness="0" Style="{ThemeResource QuietButtonStyle}">
+                        <AppBarButton.Flyout>
                             <MenuFlyout Placement="Bottom">
                                 <MenuFlyoutItem x:Name="OpenFavoritesMenu" Text="Open Favorites Page">
                                     <MenuFlyoutItem.Icon>
-                                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE8A7;"/>
+                                        <FontIcon
+                                                 FontFamily="Segoe Fluent Icons" 
+                                                    Glyph="&#xE8A7;"
+                                                     FontSize="16" 
+                                                        Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />          
                                     </MenuFlyoutItem.Icon>
                                 </MenuFlyoutItem>
                             </MenuFlyout>
-                        </Button.Flyout>
+                        </AppBarButton.Flyout>
                         <Viewbox Width="20" Height="20" HorizontalAlignment="Center" VerticalAlignment="Center">
                             <SymbolIcon Symbol="More"/>
                         </Viewbox>
-                    </Button>
-                    <!-- here the items life-->
+                    </AppBarButton>
+
+                  
+                   
+
+                     
                     <ListView x:Name="FavsListView" Margin="0,7,0,0" Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -222,6 +234,7 @@
                     </ListView>
                 </Grid>
             </Flyout>
+
             <!-- Qr Flyout -->
             <Flyout x:Name="QrFlyout" Placement="Bottom">
                 <StackPanel CornerRadius="{StaticResource ControlCornerRadius}">
@@ -275,35 +288,68 @@
             </Grid.ColumnDefinitions>
 
             <!-- BUTTONS -->
-            <StackPanel VerticalAlignment="Center" Orientation="Horizontal">
-                <!--back button -->
-                <Button x:Name="BackBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72B;}"/>
-                <!--forward button -->
-                <Button x:Name="ForwardBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72A;}"/>
-                <!--refresh button -->
-                <Button x:Name="RefreshBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE72C;}"/>
-                <!--home button -->
-                <Button x:Name="HomeBtn" Style="{StaticResource QuietButtonStyle}" x:FieldModifier="Public" Content="{icons:FluentIcon Glyph=&#xE80F;}"/>
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                <AppBarButton   Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+                        FontFamily="Segoe Fluent Icons" 
+                        Glyph="&#xE72B;" 
+                        FontSize="15"
+                        Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Back" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
+                <AppBarButton   Margin="0, -5, 0, 0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+                                FontFamily="Segoe Fluent Icons" 
+                                Glyph="&#xE72A;" 
+                                FontSize="16" 
+                                Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Forward" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
+                <AppBarButton   Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+                             FontFamily="Segoe Fluent Icons" 
+                                 Glyph="&#xE72C;" 
+                                 FontSize="16" 
+                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Refresh" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
+                <AppBarButton   Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon 
+             FontFamily="Segoe Fluent Icons" 
+                 Glyph="&#xE10F;" 
+                 FontSize="16" 
+                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}" />
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Home" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
             </StackPanel>
 
-            <!-- URL BOX-->
-            <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
-                <!-- the box to search-->
-                <AutoSuggestBox Padding="32,5,5,0" x:Name="UrlBox" x:Uid="SearchBar" x:FieldModifier="Public" CornerRadius="5" Style="{StaticResource PortalBarStyle}"/>
-                <!-- the lock icon-->
-                <Button x:Name="SecureLock" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public">
-                    <FontIcon d:Glyph="&#xE72E;" FontFamily="{StaticResource FluentIcons}"/>
-                </Button>
-            </Grid>
 
+            <!-- URL BOX-->
+            
             <!-- right site buttons -->
-            <StackPanel Grid.Column="2" Orientation="Horizontal">
+           
                 <!-- tool menu buttons -->
-                <Button x:Name="ToolBoxMore" Style="{ThemeResource QuietButtonStyle}" Content="{icons:FluentIcon Glyph=&#xE70F;}">
+                <!--<Button x:Name="ToolBoxMore" Style="{ThemeResource QuietButtonStyle}" Content="{icons:FluentIcon Glyph=&#xE70F;}">
                     <Button.Flyout>
                         <Flyout Placement="Bottom">
                             <StackPanel Orientation="Horizontal">
-                                <!-- you can add more buttons if wanted -->
+                                --><!-- you can add more buttons if wanted --><!--
                                 <Button Style="{StaticResource QuietButtonStyle}" x:Name="AdBlock" Tag="AdBlock" Width="32" ToolTipService.ToolTip="AdBlock">
                                     <Button.Content>
                                         <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEA18;"/>
@@ -317,46 +363,106 @@
                             </StackPanel>
                         </Flyout>
                     </Button.Flyout>
+                </Button>-->
+            <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
+                <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" 
+                    x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" 
+                    x:Uid="SearchBar" PlaceholderText="Enter URL" />
+
+                <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" 
+            Foreground="{ThemeResource TextFillColorDisabledBrush}" 
+            x:FieldModifier="Public" HorizontalAlignment="Left">
+                    <Button.Content>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE721;"/>
+                    </Button.Content>
                 </Button>
 
-                <!-- favorites Button-->
-                <Button x:Name="AddFav" Style="{ThemeResource QuietButtonStyle}" Tag="AddFavoriteFlyout" Visibility="Visible" Content="{icons:FluentIcon Glyph=&#xE734;}">
-                    <!-- flyout menu-->
-                    <Button.Flyout>
-                        <Flyout >
-                            <Grid MaxWidth="325">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
-                                </Grid.RowDefinitions>
-                                <!-- the content-->
-
-                                <!-- title -->
-                                <TextBlock Grid.Row="0" MinWidth="300" FontSize="20"  Text="Add Favorite"/>
-
-                                <!-- content Title -->
-                                <TextBlock Grid.Row="1" Text="Title"/>
-                                <TextBox Grid.Row="2" x:Name="FavoritesTitle"/>
-
-                                <!-- content Title -->
-                                <TextBlock Grid.Row="3" Text="Url"/>
-                                <TextBox Grid.Row="4" x:Name="FavoritesUrl"/>
-
-                                <!-- add button -->
-                                <Button Grid.Row="5" Width="Auto" Tag="AddFavorite" Margin="0,0,0,0" Content="Add Favorite"/>
-                            </Grid>
-                        </Flyout>
-                    </Button.Flyout>
+                <!-- ⭐ Favorite Button (Opens Edit Bookmark Popup) -->
+                <Button x:Name="FavoriteButton" Style="{StaticResource QuietButtonStyle}" 
+            
+            x:FieldModifier="Public" HorizontalAlignment="Right" Click="FavoriteButton_Click">
+                    <Button.Content>
+                        <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Foreground="{ThemeResource TextFillColorDisabledBrush}"  Glyph="&#xE734;"/>
+                    </Button.Content>
                 </Button>
+
+            </Grid>
+
+            <!-- 📝 Edit Bookmark Popup -->
+            <ContentDialog x:Name="EditBookmarkDialog"
+               Title="Edit Bookmark"
+               PrimaryButtonText="Save"
+               SecondaryButtonText="Cancel"
+               DefaultButton="Primary"
+               Style="{StaticResource DefaultContentDialogStyle}">
+                <StackPanel Spacing="10">
+                    <TextBox x:Name="BookmarkNameTextBox" Header="Name" PlaceholderText="Enter bookmark name"/>
+                    <ComboBox x:Name="BookmarkFolderComboBox" Header="Folder">
+                        <ComboBoxItem Content="Bookmarks bar"/>
+                        <ComboBoxItem Content="Other bookmarks"/>
+                        <ComboBoxItem Content="Mobile bookmarks"/>
+                        <ComboBoxItem Content="Choose another folder..."/>
+                    </ComboBox>
+                </StackPanel>
+            </ContentDialog>
+
+
+
+
+            <!-- List to Show Bookmarks -->
+            <!--<ListView x:Name="FavsListView" Margin="0,7,0,0" Grid.Row="1" Grid.ColumnSpan="2"
+          ItemsSource="{x:Bind Bookmarks, Mode=OneWay}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="local:Bookmark">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="16" Text="{x:Bind Name}" ToolTipService.ToolTip="{x:Bind URL}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>-->
+
+
+            <!-- favorites Button-->
+               
 
                 <!-- overige buttons -->
-                <Button x:Name="FavoritesListMenu" Flyout="{StaticResource FavsFlyouts}"  x:Uid="FavoritesListUID" Tag="FavoritesMenu" Content="{icons:FluentIcon Glyph=&#xE728;}" Style="{StaticResource QuietButtonStyle}"/>
-                <Button x:Name="DownloadBtn" x:Uid="DownloadUID" Tag="DownloadsMenu" Content="{icons:FluentIcon Glyph=&#xE896;}" Style="{StaticResource QuietButtonStyle}"/>
-                <Button x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Content="{icons:FluentIcon Glyph=&#xE81C;}" Style="{StaticResource QuietButtonStyle}"/>
+            <StackPanel Grid.Column="2" Orientation="Horizontal">
+                <AppBarButton x:Name="Favorite"  Flyout="{StaticResource FavsFlyouts}"  x:Uid="FavoriteUID" Tag="FavoriteMenu" Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon
+                                 FontFamily="Segoe Fluent Icons" 
+                                 Glyph="&#xE728;" 
+                                 FontSize="16" 
+                                 Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Favorites" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
+                <AppBarButton x:Name="downloads" x:Uid="downloadsUID" Tag="downloadsMenu" Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon
+                             FontFamily="Segoe Fluent Icons" 
+                             Glyph="&#xE896;" 
+                             FontSize="16" 
+                             Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
+                <AppBarButton x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Margin="0,-5,0,0">
+                    <AppBarButton.Icon>
+                        <FontIcon
+             FontFamily="Segoe Fluent Icons" 
+             Glyph="&#xE81C;"
+             FontSize="16" 
+             Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                    </AppBarButton.Icon>
+                    <ToolTipService.ToolTip>
+                        <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                    </ToolTipService.ToolTip>
+                </AppBarButton>
                 <Button x:Name="QrBtn" Flyout="{StaticResource QrFlyout}" x:Uid="QrUID" Tag="QrMenu" Content="{icons:FluentIcon Glyph=&#xED14;}" Style="{StaticResource QuietButtonStyle}"/>
                 <Button x:Name="MoreBtn" Flyout="{StaticResource MoreFlyout}" x:Uid="MoreUID" Tag="MoreMenu" Content="{icons:FluentIcon Glyph=&#xE712;}" Style="{StaticResource QuietButtonStyle}"/>
 

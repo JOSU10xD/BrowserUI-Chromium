@@ -38,4 +38,5 @@ namespace BrowserUI.Pages
             this.InitializeComponent();
         }
     }
+
 }

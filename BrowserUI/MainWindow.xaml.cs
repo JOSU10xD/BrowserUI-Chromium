@@ -43,6 +43,7 @@ namespace BrowserUI
     {
         private Microsoft.UI.Windowing.AppWindow appWindow;
         private Microsoft.UI.Windowing.AppWindowTitleBar titleBar;
+        
         public MainWindow()
         {
             this.InitializeComponent();
@@ -151,6 +152,7 @@ namespace BrowserUI
 
         #region Tabs
 
+
         public class Passer
         {
             public FireBrowserTabViewItem Tab { get; set; }
@@ -207,7 +209,17 @@ namespace BrowserUI
             newItem.Content = frame;
             return newItem;
         }
+        private async void FavoriteButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditBookmarkDialog.XamlRoot = this.Content.XamlRoot; // Required for WinUI 3
+            await EditBookmarkDialog.ShowAsync();
+        }
+       
+
+
 
         #endregion
+
     }
+
 }

@@ -3,50 +3,89 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Web.WebView2.Core;
+using Windows.UI.Core;
+using Microsoft.UI.Dispatching;
+using Windows.UI.WebUI;
 
 namespace BrowserUI.Pages
 {
     public sealed partial class NewTab : Page
     {
-        private bool IsOnInitialState = true;
+        private bool IsHomeScreenVisible = true;
+        private DispatcherTimer timer;
 
         public NewTab()
         {
             this.InitializeComponent();
-
-            UpdateTime();
-
-            // Optional initial homepage (NTP view by default)
-            BrowserView.Source = new Uri("https://www.bing.com");
-
-            NewTabSearch.QuerySubmitted += NewTabSearch_QuerySubmitted;
-            DataTime.Toggled += DataTimeSwitch_Toggled;
-
-            // Listen to navigation events
-            BrowserView.NavigationStarting += BrowserView_NavigationStarting;
-            BrowserView.NavigationCompleted += BrowserView_NavigationCompleted;
+            InitializeTime();
         }
 
-        // When a URL is searched from the search box
-        private void NewTabSearch_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void InitializeTime()
+        {
+            timer = new DispatcherTimer();
+            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Tick += (s, e) =>
+            {
+                var now = DateTime.Now;
+                NtpTime.Text = now.ToString("HH:mm:ss");
+                NtpDate.Text = now.ToString("dddd, MMM dd yyyy");
+            };
+            timer.Start();
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             string query = args.QueryText;
+
             if (!string.IsNullOrWhiteSpace(query))
             {
+                string url;
+
                 if (!query.Contains("."))
                 {
-                    query = "https://www.google.com/search?q=" + Uri.EscapeDataString(query);
+                    url = $"https://www.bing.com/search?q={Uri.EscapeDataString(query)}";
                 }
                 else if (!query.StartsWith("http"))
                 {
-                    query = "https://" + query;
+                    url = $"https://{query}";
+                }
+                else
+                {
+                    url = query;
                 }
 
-                BrowserView.Source = new Uri(query);
+                NavigateToBrowser(url);
             }
         }
 
-        // Handles 'Back' button click
+
+        private void NavigateToBrowser(string url)
+        {
+            BrowserView.Source = new Uri(url);
+            ShowBrowserView();
+        }
+
+        private void ShowBrowserView()
+        {
+            IsHomeScreenVisible = false;
+
+            HomeScreenGrid.Visibility = Visibility.Collapsed;
+
+            BrowserView.Visibility = Visibility.Visible;
+
+            // Listen for navigation events
+            BrowserView.NavigationCompleted += BrowserView_NavigationCompleted;
+        }
+
+        private void ShowHomeScreen()
+        {
+            IsHomeScreenVisible = true;
+
+            HomeScreenGrid.Visibility = Visibility.Visible;
+
+            BrowserView.Visibility = Visibility.Collapsed;
+        }
+
         public void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (BrowserView.CanGoBack)
@@ -55,12 +94,10 @@ namespace BrowserUI.Pages
             }
             else
             {
-                // No history -> Go to initial state
-                ResetToInitialState();
+                ShowHomeScreen();
             }
         }
 
-        // Handles 'Forward' button click
         public void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
             if (BrowserView.CanGoForward)
@@ -69,91 +106,45 @@ namespace BrowserUI.Pages
             }
         }
 
-        // Handles 'Refresh' button click
         public void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
             BrowserView.Reload();
         }
-
-        // Optional toggle date switch
-        private void DataTimeSwitch_Toggled(object sender, RoutedEventArgs e)
+        public void Dispose()
         {
-            if (DataTime.IsOn)
+           BrowserView?.Close();
+            BrowserView?.CoreWebView2?.Stop();
+            BrowserView = null;
+        }
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ContentDialog dialog = new ContentDialog
             {
-                NtpGrid.Visibility = Visibility.Visible;
-                UpdateTime();
+                Title = "Settings",
+                Content = new TextBlock { Text = "Settings dialog placeholder." },
+                CloseButtonText = "OK",
+                XamlRoot = this.XamlRoot
+            };
+            _ = dialog.ShowAsync();
+        }
+
+        private void ToggleDateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NtpTime.Visibility == Visibility.Visible)
+            {
+                NtpTime.Visibility = Visibility.Collapsed;
+                NtpDate.Visibility = Visibility.Collapsed;
             }
             else
             {
-                NtpGrid.Visibility = Visibility.Collapsed;
+                NtpTime.Visibility = Visibility.Visible;
+                NtpDate.Visibility = Visibility.Visible;
             }
         }
 
-        private void UpdateTime()
+        private void BrowserView_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
-            var now = DateTime.Now;
-            NtpTime.Text = now.ToString("HH:mm:ss");
-            NtpDate.Text = now.ToString("dddd, MMM dd yyyy");
-
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += (s, e) =>
-            {
-                var current = DateTime.Now;
-                NtpTime.Text = current.ToString("HH:mm:ss");
-                NtpDate.Text = current.ToString("dddd, MMM dd yyyy");
-            };
-            timer.Start();
-        }
-
-        // NAVIGATION EVENTS (CORE LOGIC FOR BACKGROUND HANDLING)
-
-        // When navigation starts, assume we're leaving the initial state
-        private void BrowserView_NavigationStarting(object sender, CoreWebView2NavigationStartingEventArgs e)
-        {
-            if (IsOnInitialState)
-            {
-                IsOnInitialState = false;
-            }
-        }
-
-        // When navigation is complete, optionally check if we are on our initial state URL
-        private void BrowserView_NavigationCompleted(object sender, CoreWebView2NavigationCompletedEventArgs e)
-        {
-            // Optional: Detect if we are back to the homepage
-            // This is useful if you want to show the initial state when you revisit the homepage manually
-            var currentUrl = BrowserView.Source?.ToString();
-
-            if (string.IsNullOrEmpty(currentUrl) || currentUrl == "https://www.bing.com") // Change this URL to your NTP if needed
-            {
-                IsOnInitialState = true;
-                ShowInitialStateUI();
-            }
-        }
-
-        // Reset the entire tab to the initial state (like when closing/reopening a tab)
-        private void ResetToInitialState()
-        {
-            IsOnInitialState = true;
-            BrowserView.Source = new Uri("https://www.bing.com"); // Your home page
-
-            ShowInitialStateUI();
-        }
-
-        // Show initial search and date UI
-        private void ShowInitialStateUI()
-        {
-            BigGrid.Visibility = Visibility.Visible;
-            NtpGrid.Visibility = DataTime.IsOn ? Visibility.Visible : Visibility.Collapsed;
-            TabEditBtn.Visibility = Visibility.Visible;
-        }
-
-        // Hide initial UI; it will still run in the background
-        private void HideInitialStateUI()
-        {
-            BigGrid.Visibility = Visibility.Collapsed;
-            NtpGrid.Visibility = Visibility.Collapsed;
-            TabEditBtn.Visibility = Visibility.Collapsed;
+            // Optional: Detect if you are back to home/startup URL, e.g., "about:blank" or any default URL you set
         }
     }
 }

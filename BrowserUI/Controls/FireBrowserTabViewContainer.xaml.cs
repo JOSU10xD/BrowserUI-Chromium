@@ -67,7 +67,14 @@ namespace BrowserUI.Controls
             TabItems.Add(newTab);
             sender.SelectedItem = newTab;
         }
-
+        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            {
+                newTabPage.Dispose(); 
+            }
+            TabItems.Remove(args.Item);
+        }
 
         // Event handler for closing a tab
 

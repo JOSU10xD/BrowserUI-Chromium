@@ -50,7 +50,7 @@ namespace BrowserUI
             TitleTop();
         }
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
+        public void BackButton_Click(object sender, RoutedEventArgs e)
         {
             if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
     selectedTab.Content is Frame frame &&
@@ -79,6 +79,21 @@ frame.Content is NewTab newTabPage)
             }
         }
 
+        private void Tabs_AddTabButtonClick(TabView sender, object args)
+        {
+            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
+        }
+
+        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            {
+                newTabPage.Dispose(); // Dispose of WebView2 resources
+            }
+            Tabs.TabItems.Remove(args.Item);
+        }
+
+
         #region TitleBar
 
         public void TitleTop()
@@ -86,7 +101,7 @@ frame.Content is NewTab newTabPage)
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             Microsoft.UI.WindowId windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-            appWindow.SetIcon("Logo.ico");
+            appWindow.SetIcon("gridlogo.ico");
 
 
             if (!Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported())

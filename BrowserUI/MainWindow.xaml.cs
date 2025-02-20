@@ -50,6 +50,85 @@ namespace BrowserUI
             TitleTop();
         }
 
+        public void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+    selectedTab.Content is Frame frame &&
+    frame.Content is NewTab newTabPage)
+            {
+                newTabPage.BackButton_Click(sender, e);
+            }
+
+        }
+        private void ForwardButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.ForwardButton_Click(sender, e);
+            }
+        }
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+selectedTab.Content is Frame frame &&
+frame.Content is NewTab newTabPage)
+            {
+                newTabPage.RefreshButton_Click(sender, e);
+            }
+        }
+
+        private void UrlBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (UrlBox.FindName("PART_EditableTextBox") is TextBox textBox)
+            {
+                textBox.TextChanged += UrlBox_TextChanged;
+            }
+        }
+        private async void UrlBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            string query = UrlBox.Text;
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                try
+                {
+                    using HttpClient client = new();
+                    string url = $"https://suggestqueries.google.com/complete/search?client=firefox&q={Uri.EscapeDataString(query)}";
+                    var response = await client.GetStringAsync(url);
+
+                    // Parse JSON response
+                    var suggestions = JsonSerializer.Deserialize<List<object>>(response);
+                    if (suggestions != null && suggestions.Count > 1 && suggestions[1] is JsonElement suggestionArray)
+                    {
+                        var searchSuggestions = suggestionArray.EnumerateArray().Select(x => x.GetString()).Where(x => x != null).ToList();
+                        UrlBox.ItemsSource = new ObservableCollection<string>(searchSuggestions);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    // Handle errors (e.g., network issues)
+                    Console.WriteLine($"Error fetching suggestions: {ex.Message}");
+                }
+            }
+        }
+
+        private void Tabs_AddTabButtonClick(TabView sender, object args)
+        {
+            Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
+        }
+
+        private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
+        {
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            {
+                newTabPage.Dispose(); // Dispose of WebView2 resources
+            }
+            Tabs.TabItems.Remove(args.Item);
+        }
+
+
         #region TitleBar
 
         public void TitleTop()
@@ -57,7 +136,7 @@ namespace BrowserUI
             var hWnd = WinRT.Interop.WindowNative.GetWindowHandle(this);
             Microsoft.UI.WindowId windowId = Win32Interop.GetWindowIdFromWindow(hWnd);
             appWindow = Microsoft.UI.Windowing.AppWindow.GetFromWindowId(windowId);
-            appWindow.SetIcon("Logo.ico");
+            appWindow.SetIcon("gridlogo.ico");
 
 
             if (!Microsoft.UI.Windowing.AppWindowTitleBar.IsCustomizationSupported())

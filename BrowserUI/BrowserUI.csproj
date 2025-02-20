@@ -16,6 +16,7 @@
     <Content Remove="Assets\brw1.png" />
     <Content Remove="Assets\brw2.png" />
     <Content Remove="Assets\edge_browser_logo_icon_152998.ico" />
+    <Content Remove="Assets\gridwall.png" />
     <Content Remove="Assets\Segoe Fluent Icons.ttf" />
   </ItemGroup>
     <ItemGroup>

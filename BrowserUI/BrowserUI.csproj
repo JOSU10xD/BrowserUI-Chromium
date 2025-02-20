@@ -66,6 +66,11 @@
     <ProjectReference Include="..\BrowserUISetup\BrowserUISetup.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Pages\NewTab1.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
     <Page Update="SetupWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>

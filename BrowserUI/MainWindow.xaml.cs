@@ -29,6 +29,7 @@ using System.ComponentModel;
 using Windows.System;
 using Microsoft.UI.Xaml.Media.Imaging;
 using Windows.Storage.Pickers;
+using BrowserUIMultiCore;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -46,39 +47,60 @@ namespace BrowserUI
         public MainWindow()
         {
             this.InitializeComponent();
+            LoadUserInfo();     
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
+        }
+        private void LoadUserInfo()
+        {
+            try
+            {
+                if (AuthService.CurrentUser != null)
+                {
+                    UsernameTextBlock.Text = AuthService.CurrentUser.Username;
+                }
+                else
+                {
+                    UsernameTextBlock.Text = "Guest";
+                }
+            }
+            catch (Exception ex)
+            {
+                UsernameTextBlock.Text = "Error";
+                Console.WriteLine($"Failed to load user info: {ex.Message}");
+            }
+        }
+        private IBrowserTab GetCurrentTab()
+        {
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+                selectedTab.Content is Frame frame &&
+                frame.Content is IBrowserTab browserTab)
+            {
+                return browserTab;
+            }
+
+            return null;
         }
 
         public void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-    selectedTab.Content is Frame frame &&
-    frame.Content is NewTab newTabPage)
-            {
-                newTabPage.BackButton_Click(sender, e);
-            }
-
+            GetCurrentTab()?.BackButton_Click(sender, e);
         }
+
         private void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-selectedTab.Content is Frame frame &&
-frame.Content is NewTab newTabPage)
-            {
-                newTabPage.ForwardButton_Click(sender, e);
-            }
-        }
-        private void RefreshButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-selectedTab.Content is Frame frame &&
-frame.Content is NewTab newTabPage)
-            {
-                newTabPage.RefreshButton_Click(sender, e);
-            }
+            GetCurrentTab()?.ForwardButton_Click(sender, e);
         }
 
+        private void RefreshButton_Click(object sender, RoutedEventArgs e)
+        {
+            GetCurrentTab()?.RefreshButton_Click(sender, e);
+        }
+
+        public void ScreenshotButton_Click(object sender, RoutedEventArgs e)
+        {
+            GetCurrentTab()?.CaptureScreenshot(sender, e);
+        }
         private void UrlBox_Loaded(object sender, RoutedEventArgs e)
         {
             if (UrlBox.FindName("PART_EditableTextBox") is TextBox textBox)
@@ -113,7 +135,16 @@ frame.Content is NewTab newTabPage)
                 }
             }
         }
-
+        private void GoButton_Click(object sender, RoutedEventArgs e)
+        {
+            string input = UrlBox.Text;
+            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
+                selectedTab.Content is Frame frame &&
+                frame.Content is NewTab1 newTabPage)
+            {
+                newTabPage.GoButton_Click(sender, e, input);
+            }
+        }
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
@@ -121,7 +152,7 @@ frame.Content is NewTab newTabPage)
 
         private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab1 newTabPage)
             {
                 newTabPage.Dispose(); // Dispose of WebView2 resources
             }

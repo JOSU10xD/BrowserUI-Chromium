@@ -84,7 +84,32 @@ frame.Content is NewTab newTabPage)
             if (UrlBox.FindName("PART_EditableTextBox") is TextBox textBox)
             {
                 textBox.TextChanged += UrlBox_TextChanged;
+                //Extra adding
+                textBox.GotFocus += UrlBox_GotFocus;  //  Detect when search bar is clicked
+                UrlBox.KeyDown += UrlBox_KeyDown;  // Correct event name
+
             }
+        }
+        private void UrlBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            //  Show suggestions when clicking the search bar
+            UrlBox_TextChanged(sender, null);
+        }
+
+        private void UrlBox_KeyDown(object sender, KeyRoutedEventArgs e)
+        {
+            if (e.Key == Windows.System.VirtualKey.Enter)
+            {
+                //  Perform a search when Enter is pressed
+                //PerformSearch(UrlBox.Text);
+                e.Handled = true;
+            }
+
+        }
+        private void PerformSearch(string query)
+        {
+            //  Replace with actual navigation logic
+            Console.WriteLine($"Performing search for: {query}");
         }
         private async void UrlBox_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -287,6 +312,15 @@ frame.Content is NewTab newTabPage)
             return newItem;
         }
 
+
+
         #endregion
+        private void menuHistory_Click(object sender, RoutedEventArgs e)
+        {
+            HistoryFlyoutMenu.ShowAt(History);
+            HistoryFlyoutMenu.Placement = FlyoutPlacementMode.Right;
+        }
+            
     }
+
 }

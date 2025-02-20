@@ -163,22 +163,8 @@
                                         </Viewbox>
                                     </Button>
                                 </StackPanel>
-                                <ListView x:Name="HistoryTemp"  Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanReorderItems="True" CanDragItems="True">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <Grid Margin="5" >
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="Auto" />
-                                                    <ColumnDefinition Width="*" />
-                                                </Grid.ColumnDefinitions>
-                                                <Image Grid.Column="0" Width="32" Height="32" Source="{Binding ImageSource}" />
-                                                <StackPanel Grid.Column="1">
-                                                    <TextBlock Text="{Binding Title}" FontWeight="Bold" Margin="5,0,0,0" />
-                                                    <TextBlock Text="{Binding Url}" Margin="5,0,0,0" />
-                                                </StackPanel>
-                                            </Grid>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
+                                <ListView x:Name="SmallHistoryMenu"  Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanReorderItems="True" CanDragItems="True">
+                                   
                                 </ListView>
                             </Grid>
                         </Flyout>
@@ -369,7 +355,7 @@
                 </Button>-->
             <Grid x:Name="Box" Grid.Column="1" Height="32" Margin="4,0,4,0" VerticalAlignment="Center">
                 <AutoSuggestBox Padding="32,5,5,0" CornerRadius="5" x:FieldModifier="Public" x:Name="UrlBox" Style="{StaticResource PortalBarStyle}" x:Uid="SearchBar" PlaceholderText="Enter URL"  Loaded="UrlBox_Loaded"/>
-                <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public" HorizontalAlignment="Left" >
+                <Button x:Name="SearchButton" Style="{StaticResource QuietButtonStyle}" Foreground="{ThemeResource TextFillColorDisabledBrush}" x:FieldModifier="Public" HorizontalAlignment="Left"  >
                     <Button.Content>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Glyph="&#xE721;" />
                     </Button.Content>
@@ -450,7 +436,7 @@
                         <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
-                <AppBarButton x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Margin="0,-5,0,0">
+                <AppBarButton x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Margin="0,-5,0,0" Click="menuHistory_Click">
                     <AppBarButton.Icon>
                         <FontIcon
              FontFamily="Segoe Fluent Icons" 

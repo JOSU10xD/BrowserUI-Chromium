@@ -134,16 +134,16 @@
                                     <ColumnDefinition Width="80" />
                                 </Grid.ColumnDefinitions>
                                 <!-- Buttons-->
-                                <TextBlock  x:Name="HistorySmallTitle" Margin="10,0"   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Text="History"/>
+                                <TextBlock   x:Name="HistorySmallTitle" Margin="10,0"   HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="16" FontWeight="Bold" Text="History"/>
                                 <TextBox x:Name="HistorySearchMenuItem" Height="35" Visibility="Collapsed" />
 
                                 <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal">
-                                    <Button  x:Name="SearchHistoryMenuFlyout" Width="32" Height="32"  Margin="0,0,10,0" Padding="0" Background="Transparent"  BorderThickness="0">
+                                    <Button  x:Name="searchHistoryMenuFlyout"  Click="SearchHistoryMenuFlyout" Width="32" Height="32"  Margin="0,0,10,0" Padding="0" Background="Transparent"  BorderThickness="0">
                                         <Viewbox Width="20" Height="20" VerticalAlignment="Center" HorizontalAlignment="Center">
                                             <SymbolIcon Symbol="Find" />
                                         </Viewbox>
                                     </Button>
-                                    <Button x:Name="MenuHistoryMenuFlyout" Width="32" Height="32" Padding="0" Background="Transparent" BorderThickness="0">
+                                    <Button x:Name="MenuHistoryMenuFlyout" Click="MenuHistoryMenuFlyout" Width="32" Height="32" Padding="0" Background="Transparent" BorderThickness="0">
                                         <Button.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem x:Name="ClearHistoryDataMenuItem" Tag="ClearAll"  Text="Clear History Data" >
@@ -163,8 +163,8 @@
                                         </Viewbox>
                                     </Button>
                                 </StackPanel>
-                                <ListView x:Name="SmallHistoryMenu"  Grid.Row="1" Grid.ColumnSpan="2" HorizontalAlignment="Stretch" HorizontalContentAlignment="Stretch" CanReorderItems="True" CanDragItems="True">
-                                   
+                                <ListView x:Name="SmallHistoryMenu" Grid.Row="1" HorizontalContentAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <ListViewItem Style="{StaticResource HistoryListViewItem }" HorizontalContentAlignment="Stretch" ContentTemplate="{StaticResource SmallHistoryDataTemplate}"/>
                                 </ListView>
                             </Grid>
                         </Flyout>

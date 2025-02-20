@@ -27,6 +27,7 @@
 		<None Remove="Styles\Buttons.xaml" />
 		<None Remove="Styles\CustomisedControl.xaml" />
 		<None Remove="Styles\CustomisedControls.xaml" />
+		<None Remove="Styles\DataTempaltes.xaml" />
 		<None Remove="Styles\IconSource.xaml" />
 		<None Remove="Styles\TabView.xaml" />
 		<None Remove="Styles\TextBox.xaml" />
@@ -67,6 +68,11 @@
     <ProjectReference Include="..\BrowserUICore\BrowserUICore.csproj" />
     <ProjectReference Include="..\BrowserUIMultiCore\BrowserUIMultiCore.csproj" />
     <ProjectReference Include="..\BrowserUISetup\BrowserUISetup.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="Styles\DataTempaltes.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <Page Update="Styles\CustomisedControls.xaml">

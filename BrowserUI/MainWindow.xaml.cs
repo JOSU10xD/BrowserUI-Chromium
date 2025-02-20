@@ -320,7 +320,37 @@ frame.Content is NewTab newTabPage)
             HistoryFlyoutMenu.ShowAt(History);
             HistoryFlyoutMenu.Placement = FlyoutPlacementMode.Right;
         }
-            
+        // Ensure the method signature matches WinUI 3 expectations
+        public void SearchHistoryMenuFlyout(object sender, RoutedEventArgs e)
+        {
+            ToggleSearchHistory();
+        }
+
+        //  Correct condition syntax (use '==' instead of '=' for comparison)
+        private void ToggleSearchHistory()
+        {
+            if (HistorySearchMenuItem.Visibility == Visibility.Collapsed)
+            {
+                HistorySearchMenuItem.Visibility = Visibility.Visible;
+            }
+            else // No need for else-if, just use else
+            {
+                HistorySearchMenuItem.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        // Attach the event handler in C# code
+
+
+        // Event handler method
+        private void SearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            PerformSearch(UrlBox.Text);
+        }
+
+
+
     }
 
 }
+

@@ -48,26 +48,43 @@ namespace BrowserUI
         private Microsoft.UI.Windowing.AppWindowTitleBar titleBar;
         private List<string> snippets = new();
         private string editingSnippet = null;
+        private readonly string snippetsFilePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "ClipboardSnippets.json");
         public MainWindow()
         {
             this.InitializeComponent();
+            LoadSnippets();
             LoadUserInfo();     
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
-            TitleTop();
-            LoadSnippets();  // Load saved snippets when app starts
+            TitleTop();  // Load saved snippets when app starts
         }
 
-        // Show Flyout when clicking the Clipboard icon
         private void ClipBoardButton_Click(object sender, RoutedEventArgs e)
         {
             LoadSnippets();
             ClipboardFlyout.ShowAt((FrameworkElement)sender);
+            NewSnippetBox.IsEnabled = true;  // Ensure the textbox is enabled
+            NewSnippetBox.Focus(FocusState.Programmatic); // Ensure TextBox is focused
         }
 
         // Load saved snippets from local storage
         private void LoadSnippets()
         {
-            snippets = ClipboardManager.LoadSnippets();
+            if (File.Exists(snippetsFilePath))
+            {
+                try
+                {
+                    string json = File.ReadAllText(snippetsFilePath);
+                    snippets = JsonSerializer.Deserialize<List<string>>(json) ?? new List<string>();
+                }
+                catch
+                {
+                    snippets = new List<string>();
+                }
+            }
+            else
+            {
+                snippets = new List<string>();
+            }
             RefreshSnippetsList();
         }
 
@@ -108,7 +125,22 @@ namespace BrowserUI
         // Save snippets to local storage
         private void SaveSnippets_Click(object sender, RoutedEventArgs e)
         {
-            ClipboardManager.SaveSnippets(snippets);
+            try
+            {
+                string json = JsonSerializer.Serialize(snippets, new JsonSerializerOptions { WriteIndented = true });
+                File.WriteAllText(snippetsFilePath, json);
+            }
+            catch (Exception ex)
+            {
+                ContentDialog dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = "Failed to save snippets: " + ex.Message,
+                    CloseButtonText = "OK",
+                    XamlRoot = this.Content.XamlRoot
+                };
+                _ = dialog.ShowAsync();
+            }
         }
 
         // Edit a snippet
@@ -118,6 +150,7 @@ namespace BrowserUI
             {
                 NewSnippetBox.Text = snippet;
                 editingSnippet = snippet;
+                NewSnippetBox.Focus(FocusState.Programmatic);
             }
         }
 
@@ -134,6 +167,16 @@ namespace BrowserUI
         {
             try
             {
+                // Load user data from JSON
+                var userDataResult = UserDataManager.LoadUsers(); // Get the result object
+                List<BrowserUIMultiCore.User> users = userDataResult.Users; // Extract the list
+
+                if (users != null && users.Count > 0)
+                {
+                    AuthService.SetCurrentUser(users[0]); // Set the current user
+                }
+
+                // Display the username
                 if (AuthService.CurrentUser != null)
                 {
                     UsernameTextBlock.Text = AuthService.CurrentUser.Username;
@@ -149,6 +192,7 @@ namespace BrowserUI
                 Console.WriteLine($"Failed to load user info: {ex.Message}");
             }
         }
+
         private IBrowserTab GetCurrentTab()
         {
             if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
@@ -238,6 +282,11 @@ namespace BrowserUI
             Tabs.TabItems.Remove(args.Item);
         }
 
+        private async void FavoriteButton_Click(object sender, RoutedEventArgs e)
+        {
+            EditBookmarkDialog.XamlRoot = this.Content.XamlRoot; // Required for WinUI 3
+            await EditBookmarkDialog.ShowAsync();
+        }
 
         #region TitleBar
 

@@ -377,17 +377,14 @@
                 <!-- ⭐ Favorite Button (Opens Edit Bookmark Popup) -->
                 <Button x:Name="FavoriteButton" Style="{StaticResource QuietButtonStyle}" 
             
-            x:FieldModifier="Public" HorizontalAlignment="Right" >
+            x:FieldModifier="Public" HorizontalAlignment="Right" Click="FavoriteButton_Click">
                     <Button.Content>
                         <FontIcon FontFamily="{ThemeResource SymbolThemeFontFamily}" Foreground="{ThemeResource TextFillColorDisabledBrush}"  Glyph="&#xE734;"/>
                     </Button.Content>
                 </Button>
-
             </Grid>
 
-
-
-            <!-- 📝 Edit Bookmark Popup -->
+                <!-- 📝 Edit Bookmark Popup -->
             <ContentDialog x:Name="EditBookmarkDialog"
                Title="Edit Bookmark"
                PrimaryButtonText="Save"
@@ -501,7 +498,6 @@
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-
 
 
 

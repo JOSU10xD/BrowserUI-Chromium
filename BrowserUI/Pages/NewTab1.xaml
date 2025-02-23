@@ -11,6 +11,6 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
-        <controls:WebView2 x:Name="WebView" Grid.Column="2" Margin="0,40,0,0"/>
+        <controls:WebView2 x:Name="WebView" Grid.Column="2" Margin="0,0,0,0"/>
     </Grid>
 </Page>

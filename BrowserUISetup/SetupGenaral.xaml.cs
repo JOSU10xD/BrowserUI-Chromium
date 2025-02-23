@@ -37,7 +37,6 @@ namespace BrowserUISetup
                 // Return the authenticated user.
                 return AuthService.CurrentUser;
             }
-
             // If no user is authenticated, return null or handle as needed.
             return null;
         }

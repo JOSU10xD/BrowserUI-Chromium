@@ -40,16 +40,95 @@ namespace BrowserUI
     /// <summary>
     /// An empty window that can be used on its own or navigated to within a Frame.
     /// </summary>
+    /// 
+    
     public sealed partial class MainWindow : Window
     {
         private Microsoft.UI.Windowing.AppWindow appWindow;
         private Microsoft.UI.Windowing.AppWindowTitleBar titleBar;
+        private List<string> snippets = new();
+        private string editingSnippet = null;
         public MainWindow()
         {
             this.InitializeComponent();
             LoadUserInfo();     
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
+            LoadSnippets();  // Load saved snippets when app starts
+        }
+
+        // Show Flyout when clicking the Clipboard icon
+        private void ClipBoardButton_Click(object sender, RoutedEventArgs e)
+        {
+            LoadSnippets();
+            ClipboardFlyout.ShowAt((FrameworkElement)sender);
+        }
+
+        // Load saved snippets from local storage
+        private void LoadSnippets()
+        {
+            snippets = ClipboardManager.LoadSnippets();
+            RefreshSnippetsList();
+        }
+
+        // Refresh ListView Data
+        private void RefreshSnippetsList()
+        {
+            SnippetsList.ItemsSource = null; // Reset binding
+            SnippetsList.ItemsSource = snippets;
+        }
+
+        // Add or Edit a Snippet
+        private void AddSnippet_Click(object sender, RoutedEventArgs e)
+        {
+            string newSnippet = NewSnippetBox.Text.Trim();
+            if (!string.IsNullOrEmpty(newSnippet))
+            {
+                if (editingSnippet != null)
+                {
+                    // If editing, replace the old snippet
+                    int index = snippets.IndexOf(editingSnippet);
+                    if (index >= 0)
+                    {
+                        snippets[index] = newSnippet;
+                    }
+                    editingSnippet = null; // Reset edit mode
+                }
+                else
+                {
+                    // Otherwise, add new snippet
+                    snippets.Add(newSnippet);
+                }
+
+                NewSnippetBox.Text = ""; // Clear input field
+                RefreshSnippetsList();
+            }
+        }
+
+        // Save snippets to local storage
+        private void SaveSnippets_Click(object sender, RoutedEventArgs e)
+        {
+            ClipboardManager.SaveSnippets(snippets);
+        }
+
+        // Edit a snippet
+        private void EditSnippet_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is string snippet)
+            {
+                NewSnippetBox.Text = snippet;
+                editingSnippet = snippet;
+            }
+        }
+
+        // Delete a snippet
+        private void DeleteSnippet_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button button && button.DataContext is string snippet)
+            {
+                snippets.Remove(snippet);
+                RefreshSnippetsList();
+            }
         }
         private void LoadUserInfo()
         {

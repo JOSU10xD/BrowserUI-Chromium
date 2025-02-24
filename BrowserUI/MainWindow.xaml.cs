@@ -263,12 +263,7 @@ namespace BrowserUI
         private void GoButton_Click(object sender, RoutedEventArgs e)
         {
             string input = UrlBox.Text;
-            if (Tabs.SelectedItem is FireBrowserTabViewItem selectedTab &&
-                selectedTab.Content is Frame frame &&
-                frame.Content is NewTab1 newTabPage)
-            {
-                newTabPage.GoButton_Click(sender, e, input);
-            }
+            GetCurrentTab()?.GoButton_Click(sender, e, input);
         }
         private void Tabs_AddTabButtonClick(TabView sender, object args)
         {

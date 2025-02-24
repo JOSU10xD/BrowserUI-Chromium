@@ -459,12 +459,15 @@
                         <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
-                <AppBarButton x:Name="ClipBoardButton" Tag="Clipboard" Click="ClipBoardButton_Click">
+                
+                
+                
+                <AppBarButton x:Name="ClipBoardButton" Tag="Clipboard" Click="ClipBoardButton_Click" Margin="0,-5,0,0">
                     <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xf0e3;" FontSize="16"/>
+                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF0E3;" FontSize="16" Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                     </AppBarButton.Icon>
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="Clipboard"/>
+                        <ToolTip Content="Clipboard" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20"/>
                     </ToolTipService.ToolTip>
 
                     <AppBarButton.Flyout>
@@ -478,8 +481,12 @@
                                         <DataTemplate>
                                             <StackPanel Orientation="Horizontal" Spacing="8">
                                                 <TextBlock Text="{Binding}" Width="180" TextWrapping="Wrap"/>
-                                                <Button Content="✎" Click="EditSnippet_Click" DataContext="{Binding}"/>
-                                                <Button Content="❌" Click="DeleteSnippet_Click" DataContext="{Binding}"/>
+                                                <Button Click="EditSnippet_Click" DataContext="{Binding}">
+                                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE70F;" FontSize="14"/>
+                                                </Button>
+                                                <Button Click="DeleteSnippet_Click" DataContext="{Binding}">
+                                                    <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xE8BB;" FontSize="14"/>
+                                                </Button>
                                             </StackPanel>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
@@ -491,13 +498,18 @@
 
                                 <!-- Action Buttons -->
                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                                    <Button Content="➕ Add" Click="AddSnippet_Click" Margin="5"/>
-                                    <Button Content="💾 Save" Click="SaveSnippets_Click" Margin="5"/>
+                                    <Button Click="AddSnippet_Click" Margin="5">
+                                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xF8AA;"/>
+                                    </Button>
+                                    <Button Click="SaveSnippets_Click" Margin="5">
+                                        <FontIcon FontFamily="Segoe Fluent Icons" Glyph="&#xe74e;"/>
+                                    </Button>
                                 </StackPanel>
                             </StackPanel>
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
+
 
 
 

@@ -53,6 +53,8 @@ namespace BrowserUI
         {
             this.InitializeComponent();
             LoadSnippets();
+            NewSnippetBox.IsEnabled = true;  // Ensure the textbox is enabled
+            NewSnippetBox.Focus(FocusState.Programmatic);
             LoadUserInfo();     
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();  // Load saved snippets when app starts
@@ -407,7 +409,8 @@ namespace BrowserUI
             {
                 Header = "GRID - HomePage",
                 IconSource = new Microsoft.UI.Xaml.Controls.SymbolIconSource { Symbol = Symbol.Home },
-                Style = (Style)Microsoft.UI.Xaml.Application.Current.Resources["FloatingTabViewItemStyle"]
+                Style = (Style)Microsoft.UI.Xaml.Application.Current.Resources["FloatingTabViewItemStyle"],
+                Height = 40
             };
 
 
@@ -423,7 +426,7 @@ namespace BrowserUI
             {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
-                Margin = new Thickness(0, margin, 0, 0)
+                Margin = new Thickness(0, 0, 0, 0)
             };
 
             if (page != null)

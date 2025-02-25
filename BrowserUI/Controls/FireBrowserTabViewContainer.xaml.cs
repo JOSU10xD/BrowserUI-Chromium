@@ -62,14 +62,14 @@ namespace BrowserUI.Controls
                 }
             };
 
-            ((Frame)newTab.Content).Navigate(typeof(NewTab));
+            ((Frame)newTab.Content).Navigate(typeof(NewTab1));
 
             TabItems.Add(newTab);
             sender.SelectedItem = newTab;
         }
         private void Tabs_TabCloseRequested(TabView sender, TabViewTabCloseRequestedEventArgs args)
         {
-            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab newTabPage)
+            if (args.Item is FireBrowserTabViewItem tab && tab.Content is Frame frame && frame.Content is NewTab1 newTabPage)
             {
                 newTabPage.Dispose(); 
             }

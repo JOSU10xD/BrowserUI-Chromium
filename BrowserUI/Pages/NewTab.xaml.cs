@@ -1,29 +1,46 @@
 using System;
+using System.Collections.Generic;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Web.WebView2.Core;
-using Windows.UI.Core;
 using Microsoft.UI.Dispatching;
+using BrowserUIMultiCore;
+using System.Diagnostics;
+using Windows.Storage.Pickers;
 using Windows.UI.WebUI;
 
 namespace BrowserUI.Pages
 {
-    public sealed partial class NewTab : Page
+    public sealed partial class NewTab : Page, IBrowserTab
     {
-        private bool IsHomeScreenVisible = true;
         private DispatcherTimer timer;
+        private string searchEngineUrl;
+
+        private List<string> navigationHistory = new();
+        private int currentHistoryIndex = -1;
+
+        private bool IsNavigatingThroughHistory = false;
+        private string lastCommittedUrl = null;
+        private string pendingUrl = null;
 
         public NewTab()
         {
             this.InitializeComponent();
             InitializeTime();
+            LoadUserSearchEngine();
+            InitializeWebViewSettings();
+
+            PushToHistory("HOME");
+            ShowHomeScreen();
         }
 
         private void InitializeTime()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             timer.Tick += (s, e) =>
             {
                 var now = DateTime.Now;
@@ -33,89 +50,234 @@ namespace BrowserUI.Pages
             timer.Start();
         }
 
-        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        private void LoadUserSearchEngine()
         {
-            string query = args.QueryText;
-
-            if (!string.IsNullOrWhiteSpace(query))
+            try
             {
-                string url;
-
-                if (!query.Contains("."))
+                if (AuthService.CurrentUser == null)
                 {
-                    url = $"https://www.bing.com/search?q={Uri.EscapeDataString(query)}";
-                }
-                else if (!query.StartsWith("http"))
-                {
-                    url = $"https://{query}";
+                    searchEngineUrl = "https://www.bing.com/search?q=";
                 }
                 else
                 {
-                    url = query;
+                    Settings userSettings = UserFolderManager.LoadUserSettings(AuthService.CurrentUser);
+                    searchEngineUrl = userSettings?.SearchUrl ?? "https://www.bing.com/search?q=";
                 }
+            }
+            catch (Exception ex)
+            {
+                searchEngineUrl = "https://www.bing.com/search?q=";
+                Debug.WriteLine($"Failed to load user settings: {ex.Message}");
+            }
+        }
 
+        public void GoButton_Click(object sender, RoutedEventArgs e, string input)
+        {
+            if (Uri.TryCreate(input, UriKind.Absolute, out Uri uriResult) &&
+                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps))
+            {
+                BrowserView.Source = uriResult;
+            }
+            else
+            {
+                string searchUrl = $"{searchEngineUrl}{Uri.EscapeDataString(input)}";
+                BrowserView.Source = new Uri(searchUrl);
+            }
+        }
+
+        public async void CaptureScreenshot(object sender, RoutedEventArgs e)
+        {
+            var picker = new FileSavePicker
+            {
+                SuggestedStartLocation = PickerLocationId.PicturesLibrary,
+                SuggestedFileName = "Screenshot"
+            };
+            picker.FileTypeChoices.Add("PNG Image", new[] { ".png" });
+
+            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+
+            var file = await picker.PickSaveFileAsync();
+
+            if (file != null)
+            {
+                using var stream = await file.OpenAsync(Windows.Storage.FileAccessMode.ReadWrite);
+                await BrowserView.CoreWebView2.CapturePreviewAsync(CoreWebView2CapturePreviewImageFormat.Png, stream);
+            }
+        }
+
+        private async void InitializeWebViewSettings()
+        {
+            await BrowserView.EnsureCoreWebView2Async();
+
+            BrowserView.CoreWebView2.NewWindowRequested += (sender, args) =>
+            {
+                args.Handled = true;
+                NavigateToBrowser(args.Uri.ToString());
+            };
+
+            BrowserView.NavigationStarting += (s, e) =>
+            {
+                if (!IsNavigatingThroughHistory)
+                {
+                    pendingUrl = e.Uri;
+                }
+            };
+
+            BrowserView.NavigationCompleted += (s, e) =>
+            {
+                if (e.IsSuccess && pendingUrl != null)
+                {
+                    string currentUrl = BrowserView.Source.ToString();
+
+                    // Avoid adding duplicate or reload entries into history
+                    if (!IsNavigatingThroughHistory && lastCommittedUrl != currentUrl)
+                    {
+                        PushToHistory(currentUrl);
+                    }
+
+                    lastCommittedUrl = currentUrl;
+                }
+                pendingUrl = null;
+                IsNavigatingThroughHistory = false;
+            };
+        }
+
+        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            string query = args.QueryText?.Trim();
+
+            if (!string.IsNullOrWhiteSpace(query))
+            {
+                string url = GetFormattedUrl(query);
                 NavigateToBrowser(url);
             }
         }
 
+        private string GetFormattedUrl(string input)
+        {
+            if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
+            {
+                return input;
+            }
+            else if (input.Contains(".") && !input.Contains(" "))
+            {
+                return $"https://{input}";
+            }
+            else
+            {
+                return $"{searchEngineUrl}{Uri.EscapeDataString(input)}";
+            }
+        }
 
         private void NavigateToBrowser(string url)
         {
-            BrowserView.Source = new Uri(url);
-            ShowBrowserView();
+            try
+            {
+                BrowserView.Source = new Uri(url);
+                ShowBrowserView();
+            }
+            catch (Exception ex)
+            {
+                ContentDialog errorDialog = new ContentDialog
+                {
+                    Title = "Navigation Error",
+                    Content = $"Failed to navigate to {url}.\n\nError: {ex.Message}",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.XamlRoot
+                };
+                _ = errorDialog.ShowAsync();
+            }
         }
 
         private void ShowBrowserView()
         {
-            IsHomeScreenVisible = false;
-
             HomeScreenGrid.Visibility = Visibility.Collapsed;
-
             BrowserView.Visibility = Visibility.Visible;
-
-            // Listen for navigation events
-            BrowserView.NavigationCompleted += BrowserView_NavigationCompleted;
         }
 
         private void ShowHomeScreen()
         {
-            IsHomeScreenVisible = true;
-
             HomeScreenGrid.Visibility = Visibility.Visible;
-
             BrowserView.Visibility = Visibility.Collapsed;
+        }
+
+        private void PushToHistory(string url)
+        {
+            // Avoid duplicate back-to-back entries in history
+            if (currentHistoryIndex >= 0 && navigationHistory[currentHistoryIndex] == url)
+            {
+                return;
+            }
+
+            if (currentHistoryIndex < navigationHistory.Count - 1)
+            {
+                navigationHistory.RemoveRange(currentHistoryIndex + 1, navigationHistory.Count - currentHistoryIndex - 1);
+            }
+
+            navigationHistory.Add(url);
+            currentHistoryIndex = navigationHistory.Count - 1;
+
+            Debug.WriteLine($"History: {string.Join(" -> ", navigationHistory)} | CurrentIndex: {currentHistoryIndex}");
         }
 
         public void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            if (BrowserView.CanGoBack)
+            if (currentHistoryIndex > 0)
             {
-                BrowserView.GoBack();
-            }
-            else
-            {
-                ShowHomeScreen();
+                currentHistoryIndex--;
+                NavigateToHistoryEntry(currentHistoryIndex);
             }
         }
 
         public void ForwardButton_Click(object sender, RoutedEventArgs e)
         {
-            if (BrowserView.CanGoForward)
+            if (currentHistoryIndex < navigationHistory.Count - 1)
             {
-                BrowserView.GoForward();
+                currentHistoryIndex++;
+                NavigateToHistoryEntry(currentHistoryIndex);
+            }
+        }
+
+        private void NavigateToHistoryEntry(int index)
+        {
+            IsNavigatingThroughHistory = true;
+            string entry = navigationHistory[index];
+
+            if (entry == "HOME")
+            {
+                ShowHomeScreen();
+            }
+            else
+            {
+                BrowserView.Source = new Uri(entry);
+                ShowBrowserView();
+            }
+        }
+
+        public void HomeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (navigationHistory[currentHistoryIndex] != "HOME")
+            {
+                PushToHistory("HOME");
+                ShowHomeScreen();
             }
         }
 
         public void RefreshButton_Click(object sender, RoutedEventArgs e)
         {
-            BrowserView.Reload();
+            if (BrowserView.Visibility == Visibility.Visible)
+            {
+                BrowserView.Reload();
+            }
         }
+
         public void Dispose()
         {
-           BrowserView?.Close();
             BrowserView?.CoreWebView2?.Stop();
-            BrowserView = null;
+            BrowserView?.Close();
         }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog
@@ -130,21 +292,8 @@ namespace BrowserUI.Pages
 
         private void ToggleDateButton_Click(object sender, RoutedEventArgs e)
         {
-            if (NtpTime.Visibility == Visibility.Visible)
-            {
-                NtpTime.Visibility = Visibility.Collapsed;
-                NtpDate.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                NtpTime.Visibility = Visibility.Visible;
-                NtpDate.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void BrowserView_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
-        {
-            // Optional: Detect if you are back to home/startup URL, e.g., "about:blank" or any default URL you set
+            NtpTime.Visibility = NtpTime.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
+            NtpDate.Visibility = NtpDate.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
     }
 }

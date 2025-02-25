@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -25,7 +24,7 @@ public class AuthService
             string userDatajson = File.ReadAllText(UserDataFilePath);
             users = JsonSerializer.Deserialize<List<User>>(userDatajson);
         }
-        catch (Exception ex) 
+        catch (Exception ex)
         {
             Console.WriteLine($"Error loading user data: {ex.Message}");
             users = new List<User>();
@@ -34,6 +33,11 @@ public class AuthService
     }
 
     public static User CurrentUser { get; private set; }
+
+    public static void SetCurrentUser(User user)
+    {
+        CurrentUser = user;
+    }
 
     public static bool IsUserAuthenticated => CurrentUser != null;
 

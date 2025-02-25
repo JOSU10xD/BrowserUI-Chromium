@@ -143,7 +143,7 @@
                                             <SymbolIcon Symbol="Find" />
                                         </Viewbox>
                                     </Button>
-                                    <Button x:Name="MenuHistoryMenuFlyout" Click="MenuHistoryMenuFlyout" Width="32" Height="32" Padding="0" Background="Transparent" BorderThickness="0">
+                                    <Button x:Name="MenuHistoryMenuFlyout" Click="menuHistory_Click" Width="32" Height="32" Padding="0" Background="Transparent" BorderThickness="0">
                                         <Button.Flyout>
                                             <MenuFlyout Placement="Bottom">
                                                 <MenuFlyoutItem x:Name="ClearHistoryDataMenuItem" Tag="ClearAll"  Text="Clear History Data" >

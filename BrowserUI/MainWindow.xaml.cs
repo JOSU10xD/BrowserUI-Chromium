@@ -421,7 +421,7 @@ namespace BrowserUI
             {
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 VerticalAlignment = VerticalAlignment.Stretch,
-                Margin = new Thickness(0, 0, 0, 0)
+                Margin = new Thickness(0, margin, 0, 0)
             };
 
             if (page != null)

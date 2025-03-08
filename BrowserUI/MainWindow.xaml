@@ -256,6 +256,7 @@
       Mode="Modern"
       Grid.Row="0"
      Loaded="Tabs_Loaded"
+      AddTabButtonClick="Tabs_AddTabButtonClick"                                              
      TabCloseRequested="Tabs_TabCloseRequested"
       >
             <floatingtabs:FireBrowserTabViewContainer.TabStripHeader>

@@ -445,7 +445,7 @@
              Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                     </AppBarButton.Icon>
                     <ToolTipService.ToolTip>
-                        <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
+                        <ToolTip Content="History" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
                 <Button x:Name="QrBtn" Flyout="{StaticResource QrFlyout}" x:Uid="QrUID" Tag="QrMenu" Content="{icons:FluentIcon Glyph=&#xED14;}" Style="{StaticResource QuietButtonStyle}"/>

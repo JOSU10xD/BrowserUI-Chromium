@@ -19,6 +19,8 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
 using BrowserUIMultiCore;
+using DataAccessLibrary;
+
 
 
 namespace BrowserUI
@@ -35,7 +37,8 @@ namespace BrowserUI
         public App()
         {
             this.InitializeComponent();
-        }
+            DataAccess.InitialiseDatabase();
+       }
 
         public static string GetUsernameFromCoreFolderPath(string coreFolderPath)
         {
@@ -68,7 +71,7 @@ namespace BrowserUI
             return null;
         }
 
-        public void checknormal()
+        public static void Checknormal()
         {
             string coreFolderPath = UserDataManager.CoreFolderPath;
             string username = GetUsernameFromCoreFolderPath(coreFolderPath);
@@ -90,7 +93,7 @@ namespace BrowserUI
             else
             {
                 m_window = new MainWindow();
-                checknormal();
+                Checknormal();
             }
 
             m_window.Activate();

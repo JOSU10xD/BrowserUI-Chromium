@@ -4,8 +4,9 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.Web.WebView2.Core;
 using Microsoft.UI.Dispatching;
 using System.Diagnostics;
-using DataAccessLibrary;
 using BrowserUIMultiCore;
+using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace BrowserUI.Pages
 {
@@ -13,7 +14,8 @@ namespace BrowserUI.Pages
     {
         private bool IsHomeScreenVisible = true;
         private DispatcherTimer timer;
-        private string homePageUrl = "https://www.google.com"; // Set your actual homepage URL
+        private string homePageUrl = "https://www.google.com"; // Set your homepage URL
+        private HashSet<string> visitedUrls = new HashSet<string>(); // To store already recorded URLs
 
         public NewTab()
         {
@@ -24,11 +26,10 @@ namespace BrowserUI.Pages
 
         private void InitializeTime()
         {
-            timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
             timer.Tick += (s, e) =>
             {
-                var now = DateTime.Now;
+                DateTime now = DateTime.Now;
                 NtpTime.Text = now.ToString("HH:mm:ss");
                 NtpDate.Text = now.ToString("dddd, MMM dd yyyy");
             };
@@ -38,47 +39,118 @@ namespace BrowserUI.Pages
         private async void InitializeWebView()
         {
             await BrowserView.EnsureCoreWebView2Async();
+
+            if (BrowserView.CoreWebView2 == null)
+            {
+                Debug.WriteLine("Error: WebView2 failed to initialize.");
+                return;
+            }
+
             BrowserView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
             BrowserView.NavigationCompleted += BrowserView_NavigationCompleted;
-            BrowserView.Source = new Uri(homePageUrl);
+            BrowserView.CoreWebView2.SourceChanged += CoreWebView2_SourceChanged;
+            BrowserView.CoreWebView2.HistoryChanged += CoreWebView2_HistoryChanged;
+        }
+
+        private async void CoreWebView2_SourceChanged(CoreWebView2 sender, CoreWebView2SourceChangedEventArgs args)
+        {
+            await StorePageDetails();
+        }
+
+        private async void CoreWebView2_HistoryChanged(CoreWebView2 sender, object args)
+        {
+            await StorePageDetails();
+        }
+
+        private async Task StorePageDetails()
+        {
+            if (BrowserView.Source == null || BrowserView.CoreWebView2 == null)
+                return;
+
+            try
+            {
+                await Task.Delay(500); // Ensure page title is available
+                string currentUrl = BrowserView.Source.ToString();
+
+                if (visitedUrls.Contains(currentUrl))
+                    return; // Prevent duplicate storage
+
+                visitedUrls.Add(currentUrl);
+
+                string title = BrowserView.CoreWebView2.DocumentTitle;
+                if (string.IsNullOrWhiteSpace(title) || title == "Untitled")
+                {
+                    title = ExtractTitleFromUrl(currentUrl);
+                }
+
+                if (AuthService.CurrentUser != null)
+                {
+                    DataAccess.AddHistoryEntry(AuthService.CurrentUser.Username, currentUrl, title, DateTime.Now);
+                }
+                else
+                {
+                    Debug.WriteLine("Error: No authenticated user found when saving visited URL.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error storing page details: {ex.Message}");
+            }
         }
 
         private void CoreWebView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
         {
-            // Prevent opening in a new window and redirect to the same WebView
             args.Handled = true;
             BrowserView.Source = new Uri(args.Uri);
         }
 
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
-            string query = args.QueryText;
-            if (!string.IsNullOrWhiteSpace(query))
-            {
-                string url;
-                if (!query.Contains("."))
-                {
-                    url = $"https://www.bing.com/search?q={Uri.EscapeDataString(query)}";
-                }
-                else if (!query.StartsWith("http"))
-                {
-                    url = $"https://{query}";
-                }
-                else
-                {
-                    url = query;
-                }
+            string query = args.QueryText?.Trim();
+            if (string.IsNullOrEmpty(query))
+                return;
 
-                NavigateToBrowser(url);
-            }
+            string url = ParseSearchOrUrl(query);
+            NavigateToBrowser(url);
 
             if (AuthService.CurrentUser != null)
             {
-                DataAccess.AddSearchTermToHistory(AuthService.CurrentUser.Username, sender.Text, DateTime.Now);
+                DataAccess.AddHistoryEntry(AuthService.CurrentUser.Username, url, query, DateTime.Now);
             }
             else
             {
                 Debug.WriteLine("Error: No authenticated user found when saving search term.");
+            }
+        }
+
+        private void ToggleDateButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (NtpTime.Visibility == Visibility.Visible)
+            {
+                NtpTime.Visibility = Visibility.Collapsed;
+                NtpDate.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                NtpTime.Visibility = Visibility.Visible;
+                NtpDate.Visibility = Visibility.Visible;
+            }
+        }
+
+        private string ParseSearchOrUrl(string query)
+        {
+            if (Uri.TryCreate(query, UriKind.Absolute, out Uri validUri) &&
+                (validUri.Scheme == Uri.UriSchemeHttp || validUri.Scheme == Uri.UriSchemeHttps))
+            {
+                return query;
+            }
+            else if (query.Contains(".") && !query.Contains(" "))
+            {
+                return query.StartsWith("http", StringComparison.OrdinalIgnoreCase) ? query : $"https://{query}";
+            }
+            else
+            {
+                return $"https://www.bing.com/search?q={Uri.EscapeDataString(query)}"; // Change to Google if needed
             }
         }
 
@@ -130,51 +202,73 @@ namespace BrowserUI.Pages
 
         public void Dispose()
         {
-            BrowserView?.Close();
             BrowserView?.CoreWebView2?.Stop();
+            BrowserView?.Close();
             BrowserView = null;
         }
 
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        private async void BrowserView_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
-            ContentDialog dialog = new ContentDialog
-            {
-                Title = "Settings",
-                Content = new TextBlock { Text = "Settings dialog placeholder." },
-                CloseButtonText = "OK",
-                XamlRoot = this.XamlRoot
-            };
-            _ = dialog.ShowAsync();
-        }
+            if (BrowserView.Source == null || BrowserView.CoreWebView2 == null)
+                return;
 
-        private void ToggleDateButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (NtpTime.Visibility == Visibility.Visible)
+            try
             {
-                NtpTime.Visibility = Visibility.Collapsed;
-                NtpDate.Visibility = Visibility.Collapsed;
-            }
-            else
-            {
-                NtpTime.Visibility = Visibility.Visible;
-                NtpDate.Visibility = Visibility.Visible;
-            }
-        }
-
-        private void BrowserView_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
-        {
-            if (BrowserView.Source != null)
-            {
+                await Task.Delay(500); // Ensure page title is loaded
                 string currentUrl = BrowserView.Source.ToString();
+
+                if (visitedUrls.Contains(currentUrl))
+                    return;
+
+                visitedUrls.Add(currentUrl);
+
+                string title = BrowserView.CoreWebView2.DocumentTitle;
+                if (string.IsNullOrWhiteSpace(title) || title == "Untitled")
+                {
+                    title = ExtractTitleFromUrl(currentUrl);
+                }
+
                 if (AuthService.CurrentUser != null)
                 {
-                    DataAccess.AddSearchTermToHistory(AuthService.CurrentUser.Username, currentUrl, DateTime.Now);
+                    DataAccess.AddHistoryEntry(AuthService.CurrentUser.Username, currentUrl, title, DateTime.Now);
                 }
                 else
                 {
                     Debug.WriteLine("Error: No authenticated user found when saving visited URL.");
                 }
             }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error storing page details after navigation: {ex.Message}");
+            }
+        }
+
+        private string ExtractTitleFromUrl(string url)
+        {
+            try
+            {
+                Uri uri = new Uri(url);
+                string host = uri.Host.Replace("www.", "");
+                string path = uri.AbsolutePath.Trim('/');
+                string title = host.ToUpper();
+
+                if (!string.IsNullOrEmpty(path))
+                {
+                    title += " - " + path.Replace("-", " ").Replace("/", " ");
+                }
+
+                return title;
+            }
+            catch
+            {
+                return "No Title";
+            }
+        }
+
+        private string GetShortName(string url)
+        {
+            Uri uri = new Uri(url);
+            return uri.Host.Replace("www.", "").Split('.')[0].ToUpper();
         }
     }
 }

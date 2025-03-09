@@ -19,7 +19,6 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
 using BrowserUIMultiCore;
-using DataAccessLibrary;
 
 
 
@@ -37,7 +36,6 @@ namespace BrowserUI
         public App()
         {
             this.InitializeComponent();
-            DataAccess.InitialiseDatabase(AuthService.CurrentUser?.Username ?? "DefaultUser");
         }
 
         public static string GetUsernameFromCoreFolderPath(string coreFolderPath)

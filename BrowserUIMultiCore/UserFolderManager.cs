@@ -131,7 +131,7 @@ public static  class UserFolderManager
         }
         catch (Exception ex) 
         {
-            Debug.WriteLine("Error Saving Data");
+            Debug.WriteLine("Error Saving Data", ex);
         }
     }
 }

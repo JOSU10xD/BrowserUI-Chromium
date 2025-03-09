@@ -15,7 +15,6 @@ using BrowserUI.Pages;
 using System.Net.Http;
 using System.Text.Json;
 using System.Collections.ObjectModel;
-using DataAccessLibrary;
 using Windows.UI.Popups;
 using System.Diagnostics;
 using System.Reflection;

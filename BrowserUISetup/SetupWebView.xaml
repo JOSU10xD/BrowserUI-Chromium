@@ -7,112 +7,140 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-      xmlns:ctr="using:CommunityToolkit.WinUI.Controls"
-xmlns:asset="using:BrowserUIAsset">
+    xmlns:ctr="using:CommunityToolkit.WinUI.Controls"
+    xmlns:asset="using:BrowserUIAsset"
+    FontFamily="Segoe UI">
 
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid
- x:Name="TitleBar"
- Grid.Row="0"
- VerticalAlignment="Stretch"
- Canvas.ZIndex="1"
- ColumnSpacing="5">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Image Margin="5,5,0,5" Source="{asset:ImageLoader ImageName=Webset.png}"/>
-            <TextBlock Grid.Column="1" VerticalAlignment="Center">
-     <Run Text="WebView" />
-     <Run
-         CharacterSpacing="2"
-         FontWeight="Light"
-         Text="SETTINGS" />
-            </TextBlock>
-        </Grid>
-        <Grid Grid.Row="1"
-   Margin="20">
-            <Grid
-     HorizontalAlignment="Center"
-     VerticalAlignment="Center"
-     ColumnSpacing="30">
-                <Grid.Transitions>
-                    <TransitionCollection>
-                        <EntranceThemeTransition IsStaggeringEnabled="True" />
-                    </TransitionCollection>
-                </Grid.Transitions>
+
+        <!-- Animated GIF Background -->
+        <Image Source="ms-appx:///Assets/80645-572367655 (1).gif"
+               Stretch="UniformToFill"
+               HorizontalAlignment="Stretch"
+               VerticalAlignment="Stretch" />
+
+        <!-- Overlay Content -->
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="48"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Title Bar -->
+            <Grid x:Name="TitleBar"
+                  Grid.Row="0"
+                  VerticalAlignment="Stretch"
+                  Canvas.ZIndex="1"
+                  ColumnSpacing="5">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
+                <Image Margin="5,5,0,5" Source="{asset:ImageLoader ImageName=Webset.png}"/>
+                <TextBlock Grid.Column="1"
+                           VerticalAlignment="Center"
+                           FontSize="24"
+                           Foreground="White">
+                    <Run Text="WebView" />
+                    <Run CharacterSpacing="2" FontWeight="Light" Text="SETTINGS" />
+                </TextBlock>
+            </Grid>
 
-                <Border
-         Grid.Column="0"
-         MinWidth="500"
-         MinHeight="400"
-         CornerRadius="10">
-                    <Border.Background>
-                        <ImageBrush ImageSource="ms-appx:///Assets/setup_image.png" />
-                    </Border.Background>
-                </Border>
+            <!-- Main Content Area -->
+            <Grid Grid.Row="1" Margin="20">
+                <Grid HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      ColumnSpacing="30">
+                    <Grid.Transitions>
+                        <TransitionCollection>
+                            <EntranceThemeTransition IsStaggeringEnabled="True" />
+                        </TransitionCollection>
+                    </Grid.Transitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
 
-                <StackPanel
-         Grid.Column="1"
-         VerticalAlignment="Center"
-         Orientation="Vertical"
-                 Width="500"
-         >
+                    <!-- Left Side: Image Display -->
+                    <Border Grid.Column="0"
+                            MinWidth="500"
+                            MinHeight="400"
+                            CornerRadius="10">
+                        <Border.Background>
+                            <ImageBrush ImageSource="ms-appx:///Assets/setup_image.png" />
+                        </Border.Background>
+                    </Border>
 
-                    <ctr:SettingsCard Header="WebView2 StatusBar" Description="turn on or off - statusbar" >
-                        <ctr:SettingsCard.HeaderIcon>
-                            <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xF168;" />
-                        </ctr:SettingsCard.HeaderIcon>
-                        <ToggleSwitch  x:Name="StatusTog" Toggled="StatusTog_Toggled" IsOn="True"/>
-                    </ctr:SettingsCard>
-                    <ctr:SettingsCard Header="WebView2 Browser Accelerator Keys" Description="turn on or off - BrowserAcceleratorKeys" >
-                        <ctr:SettingsCard.HeaderIcon>
-                            <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE9A9;" />
-                        </ctr:SettingsCard.HeaderIcon>
-                        <ToggleSwitch  x:Name="BrowserKeys" Toggled="BrowserKeys_Toggled" IsOn="True"/>
-                    </ctr:SettingsCard>
-                    <ctr:SettingsCard Header="WebView2 Script Dialogs" Description="turn on or off - Scripts Dialogs" >
-                        <ctr:SettingsCard.HeaderIcon>
-                            <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xED0E;" />
-                        </ctr:SettingsCard.HeaderIcon>
-                        <ToggleSwitch  x:Name="BrowserScripts" Toggled="BrowserScripts_Toggled" IsOn="True"/>
-                    </ctr:SettingsCard>
-                    <ctr:SettingsExpander>
-                        <ctr:SettingsExpander.Header>
-                            Prefrenses
-                        </ctr:SettingsExpander.Header>
-                        <ctr:SettingsExpander.HeaderIcon>
-                            <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC7A;"/>
-                        </ctr:SettingsExpander.HeaderIcon>
-                        <ctr:SettingsExpander.Items>
-                            <ctr:SettingsCard>
-                                <TextBox x:Name="userag" Text="FireBrowserWebView" TextChanged="userag_TextChanged"/>
-                                <ctr:SettingsCard.Header>
-                                    Useragent
-                                </ctr:SettingsCard.Header>
-                                <ctr:SettingsCard.HeaderIcon>
-                                    <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE736;"/>
-                                </ctr:SettingsCard.HeaderIcon>
-                            </ctr:SettingsCard>
-                        </ctr:SettingsExpander.Items>
-                    </ctr:SettingsExpander>
+                    <!-- Right Side: Settings Panel -->
+                    <StackPanel Grid.Column="1"
+                                VerticalAlignment="Center"
+                                Orientation="Vertical"
+                                Width="500">
 
-                    <Button
-             Margin="0,20,0,0"
-             x:Name="SetupWebViewBtn"
-          Click="SetupWebViewBtn_Click"
-             Content="Setup WebView"
-             Style="{ThemeResource AccentButtonStyle}" />
-                </StackPanel>
+                        <!-- WebView2 StatusBar Setting -->
+                        <ctr:SettingsCard Header="WebView2 StatusBar"
+                                          Description="turn on or off - statusbar"
+                                          FontSize="18">
+                            <ctr:SettingsCard.HeaderIcon>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xF168;" />
+                            </ctr:SettingsCard.HeaderIcon>
+                            <ToggleSwitch x:Name="StatusTog" Toggled="StatusTog_Toggled" IsOn="True"/>
+                        </ctr:SettingsCard>
+
+                        <!-- WebView2 Browser Accelerator Keys -->
+                        <ctr:SettingsCard Header="WebView2 Browser Accelerator Keys"
+                                          Description="turn on or off - BrowserAcceleratorKeys"
+                                          FontSize="18">
+                            <ctr:SettingsCard.HeaderIcon>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE9A9;" />
+                            </ctr:SettingsCard.HeaderIcon>
+                            <ToggleSwitch x:Name="BrowserKeys" Toggled="BrowserKeys_Toggled" IsOn="True"/>
+                        </ctr:SettingsCard>
+
+                        <!-- WebView2 Script Dialogs -->
+                        <ctr:SettingsCard Header="WebView2 Script Dialogs"
+                                          Description="turn on or off - Scripts Dialogs"
+                                          FontSize="18">
+                            <ctr:SettingsCard.HeaderIcon>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xED0E;" />
+                            </ctr:SettingsCard.HeaderIcon>
+                            <ToggleSwitch x:Name="BrowserScripts" Toggled="BrowserScripts_Toggled" IsOn="True"/>
+                        </ctr:SettingsCard>
+
+                        <!-- Preferences Expander -->
+                        <ctr:SettingsExpander FontSize="18">
+                            <ctr:SettingsExpander.Header>
+                                Preferences
+                            </ctr:SettingsExpander.Header>
+                            <ctr:SettingsExpander.HeaderIcon>
+                                <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xEC7A;"/>
+                            </ctr:SettingsExpander.HeaderIcon>
+                            <ctr:SettingsExpander.Items>
+                                <ctr:SettingsCard FontSize="18">
+                                    <TextBox x:Name="userag" Text="FireBrowserWebView"
+                                             TextChanged="userag_TextChanged"
+                                             FontSize="16"/>
+                                    <ctr:SettingsCard.Header>
+                                        UserAgent
+                                    </ctr:SettingsCard.Header>
+                                    <ctr:SettingsCard.HeaderIcon>
+                                        <FontIcon FontFamily="{StaticResource FluentIcons}" Glyph="&#xE736;"/>
+                                    </ctr:SettingsCard.HeaderIcon>
+                                </ctr:SettingsCard>
+                            </ctr:SettingsExpander.Items>
+                        </ctr:SettingsExpander>
+
+                        <!-- Setup WebView Button -->
+                        <Button Margin="0,20,0,0"
+                                x:Name="SetupWebViewBtn"
+                                Click="SetupWebViewBtn_Click"
+                                Content="Setup WebView"
+                                Style="{ThemeResource AccentButtonStyle}"
+                                FontSize="18" />
+                    </StackPanel>
+                </Grid>
             </Grid>
         </Grid>
+
     </Grid>
 </Page>

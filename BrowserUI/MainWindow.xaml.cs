@@ -16,6 +16,9 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Collections.ObjectModel;
 using DataAccessLibrary;
+using Windows.UI.Popups;
+using System.Diagnostics;
+using System.Reflection;
 
 
 // To learn more about WinUI, the WinUI project structure,
@@ -36,6 +39,9 @@ namespace BrowserUI
             Tabs.TabItems.Add(CreateNewTab(typeof(NewTab)));
             TitleTop();
         }
+
+       
+
 
         public void BackButton_Click(object sender, RoutedEventArgs e)
         {

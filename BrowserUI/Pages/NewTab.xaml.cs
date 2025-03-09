@@ -6,6 +6,7 @@ using Microsoft.Web.WebView2.Core;
 using Windows.UI.Core;
 using Microsoft.UI.Dispatching;
 using Windows.UI.WebUI;
+using DataAccessLibrary;
 
 namespace BrowserUI.Pages
 {
@@ -56,6 +57,8 @@ namespace BrowserUI.Pages
 
                 NavigateToBrowser(url);
             }
+            DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
+            BrowserView.Source = new Uri("https://www.google.com/search?q=" + sender.Text);
         }
 
 

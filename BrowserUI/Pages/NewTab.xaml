@@ -29,7 +29,7 @@
         </Grid>
 
         <!-- WebView for browsing -->
-        <WebView2 x:Name="BrowserView" Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
+        <WebView2 x:Name="BrowserView"   Visibility="Collapsed" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" />
 
     </Grid>
 </Page>

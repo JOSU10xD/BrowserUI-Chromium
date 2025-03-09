@@ -450,15 +450,15 @@ namespace BrowserUI
             return newItem;
         }
 
-        private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            if (sender.Text != string.Empty)
-            {
-                DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
-                //search 
-                BrowserView.Source = new Uri("https://www.bing.com/search?q=" + sender.Text);
-            }
-        }
+        //private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        //{
+        //    if (sender.Text != string.Empty)
+        //    {
+        //        DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
+        //        //search 
+        //        BrowserView.Source = new Uri("https://www.bing.com/search?q=" + sender.Text);
+        //    }
+        //}
             #endregion
     }
 }

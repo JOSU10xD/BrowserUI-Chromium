@@ -20,7 +20,7 @@
                 <AutoSuggestBox  QuerySubmitted="SearchBox_QuerySubmitted" PlaceholderText="Search or enter a URL..." Width="400"
                                    TextChanged="Search_TextChanged"
                                     SuggestionChosen="Search_SuggestionChosen"
-                                    GotFocus="Search_GotFocus" Loaded="UrlBox_Loaded" x:Name="UrlBox"/>    
+                                    GotFocus="Search_GotFocus" />    
                 <TextBlock x:Name="NtpTime" FontSize="24" Margin="0,10,0,0"/>
                 <TextBlock x:Name="NtpDate" FontSize="18"/>
                 <Button Content="Toggle Date/Time" Click="ToggleDateButton_Click" Margin="0,10,0,0"/>

@@ -13,5 +13,7 @@ namespace BrowserUI.Pages
         void RefreshButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
         void GoButton_Click(object sender, Microsoft.UI.Xaml.RoutedEventArgs e, string input);
         void CaptureScreenshot(object sender, Microsoft.UI.Xaml.RoutedEventArgs e);
+         
+        
     }
 }

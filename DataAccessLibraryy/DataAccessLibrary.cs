@@ -62,6 +62,32 @@ namespace DataAccessLibrary
                 conn.Close();
             }
         }
+        public static List<string> GetAllSearchedTerms()
+        {
+            List<string> terms = new List<string>();
+
+            string db = Path.Combine(ApplicationData.Current.LocalFolder.Path, dbPath);
+
+            //releasing the mistake for the 2 time dbPath -> *db
+            using (SqliteConnection conn = new SqliteConnection($"FileName={db}"))
+            {
+                conn.Open();
+
+                SqliteCommand selectTermsCommand = new SqliteCommand("SELECT SearchTerm FROM searchterms", conn);
+
+                //this part reads the content
+                SqliteDataReader reader = selectTermsCommand.ExecuteReader();
+                while (reader.Read())
+                {
+                    terms.Add(reader.GetString(0));
+                }
+
+                conn.Close();
+            }
+
+            //returns values
+            return terms;
+        }
     }
 }
 

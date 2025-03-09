@@ -24,7 +24,7 @@ namespace BrowserUI.Pages
         private bool IsNavigatingThroughHistory = false;
         private string lastCommittedUrl = null;
         private string pendingUrl = null;
-
+        List<string> searchTermsLocal = new List<string>();
         public NewTab()
         {
             this.InitializeComponent();
@@ -153,9 +153,57 @@ namespace BrowserUI.Pages
                 string url = GetFormattedUrl(query);
                 NavigateToBrowser(url);
             }
-            DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
+            if (sender.Text != string.Empty)
+            {
+                DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
             //search 
-            BrowserView.Source = new Uri("https://www.google.com/search?q=" + sender.Text);
+            BrowserView.Source = new Uri("https://www.bing.com/search?q=" + sender.Text);
+                GetSearchTermsList();
+            }
+
+        }
+        private void Search_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        {
+            var searches = searchTermsLocal;
+            List<string> filteredSearchTerms = new List<string>();
+
+            foreach (string searchTerm in searches)
+            {
+                if (searchTerm.ToLower().StartsWith(sender.Text.ToLower()))
+                {
+                    filteredSearchTerms.Add(searchTerm);
+                }
+            }
+            //kleine code improvment
+
+            if (sender.Text != string.Empty)
+            {
+                sender.ItemsSource = filteredSearchTerms;
+            }
+
+        }
+        private void Search_SuggestionChosen(AutoSuggestBox sender, AutoSuggestBoxSuggestionChosenEventArgs args)
+        {
+            //search 
+            BrowserView.Source = new Uri("https://www.bing.com/search?q=" + sender.Text);
+        }
+
+        private async void Search_GotFocus(object sender, RoutedEventArgs e)
+        {
+            GetSearchTermsList();
+        }
+
+        private void TabMenu_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void GetSearchTermsList()
+        {
+            //clear the stuff
+            searchTermsLocal.Clear();
+            // get search
+            searchTermsLocal = DataAccess.GetAllSearchedTerms();
         }
 
         private string GetFormattedUrl(string input)

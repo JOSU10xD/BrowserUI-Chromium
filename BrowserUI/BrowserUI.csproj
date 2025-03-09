@@ -55,15 +55,18 @@
     <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
     <PackageReference Include="CommunityToolkit.WinUI.Controls.SettingsControls" Version="8.1.240916" />
     <PackageReference Include="CommunityToolkit.WinUI.UI" Version="7.1.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite.Core" Version="9.0.2" />
     <PackageReference Include="Microsoft.Web.WebView2" Version="1.0.3065.39" />
     <PackageReference Include="Microsoft.Windows.SDK.BuildTools" Version="10.0.26100.1742" />
     <PackageReference Include="Microsoft.WindowsAppSDK" Version="1.6.250205002" />
+    <PackageReference Include="SQLitePCLRaw.bundle_green" Version="2.1.10" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\BrowserUIAsset\BrowserUIAsset.csproj" />
     <ProjectReference Include="..\BrowserUICore\BrowserUICore.csproj" />
     <ProjectReference Include="..\BrowserUIMultiCore\BrowserUIMultiCore.csproj" />
     <ProjectReference Include="..\BrowserUISetup\BrowserUISetup.csproj" />
+    <ProjectReference Include="..\DataAccessLibraryy\DataAccessLibraryy.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Page Update="Pages\NewTab1.xaml">

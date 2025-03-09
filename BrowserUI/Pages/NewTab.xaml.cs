@@ -9,6 +9,7 @@ using BrowserUIMultiCore;
 using System.Diagnostics;
 using Windows.Storage.Pickers;
 using Windows.UI.WebUI;
+using DataAccessLibrary;
 
 namespace BrowserUI.Pages
 {
@@ -152,6 +153,9 @@ namespace BrowserUI.Pages
                 string url = GetFormattedUrl(query);
                 NavigateToBrowser(url);
             }
+            DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
+            //search 
+            BrowserView.Source = new Uri("https://www.google.com/search?q=" + sender.Text);
         }
 
         private string GetFormattedUrl(string input)

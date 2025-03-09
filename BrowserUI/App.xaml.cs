@@ -4,6 +4,7 @@ using System.IO;
 using System.Text.Json;
 using Microsoft.UI.Xaml;
 using BrowserUIMultiCore;
+using DataAccessLibrary;
 
 namespace BrowserUI
 {
@@ -15,6 +16,7 @@ namespace BrowserUI
         public App()
         {
             this.InitializeComponent();
+            DataAccess.InitialiseDatabase();
         }
 
         public static string GetUsernameFromCoreFolderPath(string coreFolderPath)

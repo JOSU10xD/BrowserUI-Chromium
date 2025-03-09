@@ -50,7 +50,7 @@ public static class UserDataManager
             return AuthService.CurrentUser.Username;
         }
 
-        return "Geust";
+        return "Guest";
     }
 
     public static void SaveUsers(List<User> users)

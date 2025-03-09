@@ -37,8 +37,8 @@ namespace BrowserUI
         public App()
         {
             this.InitializeComponent();
-            DataAccess.InitialiseDatabase();
-       }
+            DataAccess.InitialiseDatabase(AuthService.CurrentUser?.Username ?? "DefaultUser");
+        }
 
         public static string GetUsernameFromCoreFolderPath(string coreFolderPath)
         {

@@ -1,12 +1,11 @@
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Navigation;
 using Microsoft.Web.WebView2.Core;
-using Windows.UI.Core;
 using Microsoft.UI.Dispatching;
-using Windows.UI.WebUI;
+using System.Diagnostics;
 using DataAccessLibrary;
+using BrowserUIMultiCore;
 
 namespace BrowserUI.Pages
 {
@@ -14,11 +13,13 @@ namespace BrowserUI.Pages
     {
         private bool IsHomeScreenVisible = true;
         private DispatcherTimer timer;
+        private string homePageUrl = "https://www.google.com"; // Set your actual homepage URL
 
         public NewTab()
         {
             this.InitializeComponent();
             InitializeTime();
+            InitializeWebView();
         }
 
         private void InitializeTime()
@@ -34,14 +35,27 @@ namespace BrowserUI.Pages
             timer.Start();
         }
 
+        private async void InitializeWebView()
+        {
+            await BrowserView.EnsureCoreWebView2Async();
+            BrowserView.CoreWebView2.NewWindowRequested += CoreWebView2_NewWindowRequested;
+            BrowserView.NavigationCompleted += BrowserView_NavigationCompleted;
+            BrowserView.Source = new Uri(homePageUrl);
+        }
+
+        private void CoreWebView2_NewWindowRequested(CoreWebView2 sender, CoreWebView2NewWindowRequestedEventArgs args)
+        {
+            // Prevent opening in a new window and redirect to the same WebView
+            args.Handled = true;
+            BrowserView.Source = new Uri(args.Uri);
+        }
+
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             string query = args.QueryText;
-
             if (!string.IsNullOrWhiteSpace(query))
             {
                 string url;
-
                 if (!query.Contains("."))
                 {
                     url = $"https://www.bing.com/search?q={Uri.EscapeDataString(query)}";
@@ -57,10 +71,16 @@ namespace BrowserUI.Pages
 
                 NavigateToBrowser(url);
             }
-            DataAccess.AddSearchTermToTable(sender.Text, DateTime.Now, 0);
-            BrowserView.Source = new Uri("https://www.google.com/search?q=" + sender.Text);
-        }
 
+            if (AuthService.CurrentUser != null)
+            {
+                DataAccess.AddSearchTermToHistory(AuthService.CurrentUser.Username, sender.Text, DateTime.Now);
+            }
+            else
+            {
+                Debug.WriteLine("Error: No authenticated user found when saving search term.");
+            }
+        }
 
         private void NavigateToBrowser(string url)
         {
@@ -71,22 +91,16 @@ namespace BrowserUI.Pages
         private void ShowBrowserView()
         {
             IsHomeScreenVisible = false;
-
             HomeScreenGrid.Visibility = Visibility.Collapsed;
-
             BrowserView.Visibility = Visibility.Visible;
-
-            // Listen for navigation events
-            BrowserView.NavigationCompleted += BrowserView_NavigationCompleted;
         }
 
         private void ShowHomeScreen()
         {
             IsHomeScreenVisible = true;
-
             HomeScreenGrid.Visibility = Visibility.Visible;
-
-            BrowserView.Visibility = Visibility.Collapsed;
+            BrowserView.Visibility = Visibility.Visible;
+            BrowserView.Source = new Uri(homePageUrl);
         }
 
         public void BackButton_Click(object sender, RoutedEventArgs e)
@@ -113,12 +127,14 @@ namespace BrowserUI.Pages
         {
             BrowserView.Reload();
         }
+
         public void Dispose()
         {
-           BrowserView?.Close();
+            BrowserView?.Close();
             BrowserView?.CoreWebView2?.Stop();
             BrowserView = null;
         }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             ContentDialog dialog = new ContentDialog
@@ -147,7 +163,18 @@ namespace BrowserUI.Pages
 
         private void BrowserView_NavigationCompleted(WebView2 sender, CoreWebView2NavigationCompletedEventArgs args)
         {
-            // Optional: Detect if you are back to home/startup URL, e.g., "about:blank" or any default URL you set
+            if (BrowserView.Source != null)
+            {
+                string currentUrl = BrowserView.Source.ToString();
+                if (AuthService.CurrentUser != null)
+                {
+                    DataAccess.AddSearchTermToHistory(AuthService.CurrentUser.Username, currentUrl, DateTime.Now);
+                }
+                else
+                {
+                    Debug.WriteLine("Error: No authenticated user found when saving visited URL.");
+                }
+            }
         }
     }
 }

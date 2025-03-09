@@ -23,6 +23,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BrowserUISetup", "BrowserUI
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccessLibrary", "DataAccessLibrary\DataAccessLibrary.csproj", "{48920074-D0DA-41DE-8DD4-E1E067BBA5DD}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2901E49A-301C-47CC-903A-D492BBF7B673} = {2901E49A-301C-47CC-903A-D492BBF7B673}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -276,6 +276,11 @@ namespace BrowserUI
             {
                 newTabPage.Dispose(); // Dispose of WebView2 resources
             }
+            else
+            {
+                sender.TabItems.Remove(args.Tab);
+                Environment.Exit(0);
+            }
             Tabs.TabItems.Remove(args.Item);
         }
 

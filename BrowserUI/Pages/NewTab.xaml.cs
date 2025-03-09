@@ -10,6 +10,10 @@ using System.Diagnostics;
 using Windows.Storage.Pickers;
 using Windows.UI.WebUI;
 using DataAccessLibrary;
+using System.Collections.ObjectModel;
+using System.Text.Json;
+using System.Net.Http;
+
 
 namespace BrowserUI.Pages
 {
@@ -143,7 +147,7 @@ namespace BrowserUI.Pages
                 IsNavigatingThroughHistory = false;
             };
         }
-
+                   //auto suggestion set for window search bar
         private void SearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
             string query = args.QueryText?.Trim();
@@ -166,6 +170,10 @@ namespace BrowserUI.Pages
         {
             var searches = searchTermsLocal;
             List<string> filteredSearchTerms = new List<string>();
+            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                sender.ItemsSource = searchTermsLocal;
+            }
 
             foreach (string searchTerm in searches)
             {
@@ -347,5 +355,6 @@ namespace BrowserUI.Pages
             NtpTime.Visibility = NtpTime.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
             NtpDate.Visibility = NtpDate.Visibility == Visibility.Visible ? Visibility.Collapsed : Visibility.Visible;
         }
+       
     }
 }

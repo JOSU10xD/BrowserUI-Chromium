@@ -447,18 +447,19 @@
                         <ToolTip Content="Screenshot" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
-                <AppBarButton x:Name="downloads" x:Uid="downloadsUID" Tag="downloadsMenu" Margin="0,-5,0,0">
+                <AppBarButton x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Margin="0,-5,0,0">
                     <AppBarButton.Icon>
                         <FontIcon
-                             FontFamily="Segoe Fluent Icons" 
-                             Glyph="&#xE896;" 
-                             FontSize="16" 
-                             Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+FontFamily="Segoe Fluent Icons" 
+Glyph="&#xE81C;"
+FontSize="16" 
+Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                     </AppBarButton.Icon>
                     <ToolTipService.ToolTip>
                         <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
+
                 
                 
                 
@@ -512,19 +513,19 @@
 
 
 
-
-                <AppBarButton x:Name="History" Flyout="{x:Bind HistoryFlyoutMenu}" x:Uid="HistoryUID" Tag="HistoryMenu" Margin="0,-5,0,0">
+                <AppBarButton x:Name="downloads" x:Uid="downloadsUID" Tag="downloadsMenu" Margin="0,-5,0,0">
                     <AppBarButton.Icon>
                         <FontIcon
-             FontFamily="Segoe Fluent Icons" 
-             Glyph="&#xE81C;"
-             FontSize="16" 
-             Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
+                             FontFamily="Segoe Fluent Icons" 
+                             Glyph="&#xE896;" 
+                             FontSize="16" 
+                             Foreground="{ThemeResource AccentAAFillColorDefaultBrush}"/>
                     </AppBarButton.Icon>
                     <ToolTipService.ToolTip>
                         <ToolTip Content="Downloads" Placement="Bottom" HorizontalOffset="10" VerticalOffset="20" />
                     </ToolTipService.ToolTip>
                 </AppBarButton>
+                
                 <AppBarButton x:Name="MenuMore" x:Uid="MenuMoreUID" Tag="MoreMenu" Flyout="{StaticResource MoreFlyout}" VerticalAlignment="Stretch" Margin="0,-5,0,0" >
                     <AppBarButton.Icon >
                         <FontIcon 
